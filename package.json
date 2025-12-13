@@ -1,0 +1,17 @@
+{
+  "name": "extention",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build:dev": "cross-env API_HOST_VALUE=\"https://localhost:8000\" node build.js",
+    "build:prod": "cross-env API_HOST_VALUE=\"https://31.59.120.159:8000\" node build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "cross-env": "^10.1.0",
+    "esbuild": "^0.27.1"
+  }
+}
