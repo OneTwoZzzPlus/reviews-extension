@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reviews</title>
+    <link rel="stylesheet" href="styles.css">
+    <style> body {width:500px;} </style>
 </head>
 <body>
     <h1>Поиск отзывов</h1>
-    <label for="reviewInput"></label><input type="text" id="reviewInput" placeholder="Введите имя" />
-    <div id="reviewResultsContainer"></div>
-    <script type="module" src="popup.js"></script>
+    <label for="reviewsInput"></label><input type="text" id="reviewsInput" placeholder="Поиск..." />
+    <p id="reviewsStatus"></p>
+    <div id="reviewsContainer"></div>
+    <script src="popup.js"></script>
 </body>
 </html>

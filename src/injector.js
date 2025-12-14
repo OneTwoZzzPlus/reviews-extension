@@ -1,5 +1,6 @@
 'use strict';
 import {fetchTeacher} from "./api";
+import {brokeReviewsText, createReviewContentBox, statusReviewsText} from "./ui.js";
 
 const INJECTED_ELEMENT_SELECTOR = 'reviews';
 const STATUS_BOX_SELECTOR = 'reviewsStatusBox';
@@ -23,21 +24,24 @@ function createReviewBlock(id) {
 }
 
 /** Заполняет блок отзывов в случае удачного запроса **/
-async function resolveReviewBlock(result) {
+async function resolveReviewBlock(data) {
+    const status_box = document.querySelector("#" + STATUS_BOX_SELECTOR);
     const injected = document.querySelector("#" + INJECTED_ELEMENT_SELECTOR);
-    // TODO: draw(injected)
+
+    const content = createReviewContentBox(data);
+    if (content !== null) {
+        injected.append(content);
+        status_box.remove();
+    } else {
+        console.log(data);
+        status_box.innerHTML = brokeReviewsText;
+    }
 }
 
 /** Заполняет status в случае неудачного запроса **/
 async function rejectReviewBlock(status) {
-    let answer;
-    switch (status) {
-        case 0: answer = "Сервер с отзывами недоступен =("; break;
-        case 404: answer = "Отзывы отсутствуют"; break;
-        default: answer = "Сервер хотел поделиться отзывами, но выдал " + status
-    }
     const status_box = document.querySelector("#" + STATUS_BOX_SELECTOR);
-    status_box.innerHTML = answer;
+    status_box.innerHTML = statusReviewsText(status);
 }
 
 

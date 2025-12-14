@@ -17,7 +17,7 @@ try {
         entryPoints: [path.join(SRC_DIR, 'injector.js')],
         bundle: true,
         outfile: path.join(DIST_DIR, 'injector.js'),
-        minify: false,
+        minify: true,
         sourcemap: true,
         target: ['chrome110'],
         define: {
@@ -31,7 +31,7 @@ try {
         entryPoints: [path.join(SRC_DIR, 'popup.js')],
         bundle: true,
         outfile: path.join(DIST_DIR, 'popup.js'),
-        minify: false,
+        minify: true,
         sourcemap: true,
         target: ['chrome110'],
         define: {
