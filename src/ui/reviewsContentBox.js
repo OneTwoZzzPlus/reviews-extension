@@ -85,7 +85,7 @@ export default function createReviewsContentBox(data) {
     const wrapper = document.createElement('div');
     wrapper.classList.add("reviews-content-box");
     wrapper.appendChild(summaries);
-    wrapper.appendChild(dropdown);
+    if (data.comments.length !== 1) wrapper.appendChild(dropdown);
     wrapper.appendChild(comments);
 
     return wrapper;
