@@ -6,7 +6,7 @@
    - `yandex` [browser://extensions](browser://extensions/)
    - `opera` [opera://extensions](opera://extensions/)
 2. Включите режим разработчика
-3. Распакуйте `extention.zip`
+3. Распакуйте `dist-X.X.X.zip`
 4. Нажмите `Загрузить распакованное расширение`
 5. Выберите распакованное расширение
 
