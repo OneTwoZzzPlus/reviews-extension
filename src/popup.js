@@ -6,6 +6,13 @@ import {fetchSearch, fetchTeacher, fetchSubject} from "./api.js";
 
 document.addEventListener('DOMContentLoaded', main);
 
+/** Добавляем переходы по ссылкам в другую вкладку **/
+document.body.addEventListener('click', function (e) {
+    if (e.target.matches('a[href]')) {
+        chrome.tabs.create({url: e.target.href});
+    }
+});
+
 let statusBox, container, input;
 let timeoutId;
 let abortController;
