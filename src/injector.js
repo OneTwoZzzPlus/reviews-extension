@@ -53,17 +53,23 @@ function identify() {
         new RegExp('(^| )' + 'auth._id_token.itmoId' + '=([^;]+)')
     );
     if (!match) return;
+
     const token = match[2];
-    const payload = parseJwt(token)
+    const payload = parseJwt(token);
     if (!payload?.isu) {
         console.log('[INJECTOR] isu not found');
         return;
     }
-    chrome.storage.local.set({jwtToken: token}).catch(err => {
-        if (!err?.message?.includes('Extension context invalidated')) {
+
+    if (!chrome.runtime?.id) return;
+
+    chrome.storage.local.set({ jwtToken: token }, () => {
+        const err = chrome.runtime.lastError;
+        if (err && !err.message.includes('Extension context invalidated')) {
             console.error(err);
         }
     });
+
     console.log('[INJECTOR] isu saved successfully');
 }
 
