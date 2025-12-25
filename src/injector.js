@@ -48,7 +48,7 @@ async function rejectReviewBlock(status) {
 }
 
 /** Сохраняет jwt в storage.local **/
-async function identify() {
+function identify() {
     const match = document.cookie.match(
         new RegExp('(^| )' + 'auth._id_token.itmoId' + '=([^;]+)')
     );
@@ -59,7 +59,11 @@ async function identify() {
         console.log('[INJECTOR] isu not found');
         return;
     }
-    chrome.storage.local.set({jwtToken: token});
+    chrome.storage.local.set({jwtToken: token}).catch(err => {
+        if (!err?.message?.includes('Extension context invalidated')) {
+            console.error(err);
+        }
+    });
     console.log('[INJECTOR] isu saved successfully');
 }
 
@@ -68,7 +72,7 @@ function observeChangeDOM() {
     console.log("[INJECTOR] injector started");
     const observer = new MutationObserver(() => {
         // Идентификация пользователя
-        identify().then(() => {})
+        identify()
         // Проверяем корректность URL
         const match = location.pathname.match(/^\/persons\/(\d+)/);
         if (!match) {
