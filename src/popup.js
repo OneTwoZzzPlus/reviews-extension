@@ -52,9 +52,11 @@ async function search() {
             container.innerHTML = "";
             container.appendChild(search);
         } else {
+            container.innerHTML = "";
             statusBox.innerHTML = strings.brokeSearchText;
         }
     }).catch(status => {
+        container.innerHTML = "";
         statusBox.innerHTML = strings.statusSearchText(status);
     })
 }
