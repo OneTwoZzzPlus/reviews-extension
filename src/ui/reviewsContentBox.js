@@ -28,6 +28,27 @@ function sortComments(comments, model = 0) {
     });
 }
 
+function createRating() {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("rating-wrap")
+    wrapper.innerHTML = `<div class="rating-row">
+        <span class="rating-label">Ваша оценка:</span>
+        <div class="rating">
+            <input type="radio" id="rate-5" name="rating" value="5">
+            <label for="rate-5">★</label>
+            <input type="radio" id="rate-4" name="rating" value="4">
+            <label for="rate-4">★</label>
+            <input type="radio" id="rate-3" name="rating" value="3">
+            <label for="rate-3">★</label>
+            <input type="radio" id="rate-2" name="rating" value="2">
+            <label for="rate-2">★</label>
+            <input type="radio" id="rate-1" name="rating" value="1">
+            <label for="rate-1">★</label>
+        </div>
+    </div>`
+    return wrapper;
+}
+
 function createDropdown(commentsData, commentsBox) {
     const wrapper = document.createElement("select");
     wrapper.name = "sort";
@@ -89,6 +110,7 @@ export default function createReviewsContentBox(data) {
 
     const wrapper = document.createElement('div');
     wrapper.classList.add("reviews-content-box");
+    wrapper.appendChild(createRating());
     wrapper.appendChild(summaries);
     if (data.comments.length !== 1) wrapper.appendChild(dropdown);
     wrapper.appendChild(comments);

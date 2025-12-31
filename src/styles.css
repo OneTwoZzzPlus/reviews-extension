@@ -180,3 +180,59 @@
     min-width: 20px;
     text-align: center;
 }
+
+/* ===============================
+   Rating row
+================================ */
+
+.rating-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px;
+    padding: 8px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    font-size: 14px;
+    color: var(--color-text);
+    box-sizing: border-box;
+    background: var(--color-bg);
+}
+
+.rating-label {
+    white-space: nowrap;
+    color: var(--color-muted);
+}
+
+/* ===============================
+   Stars
+================================ */
+
+.rating {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    line-height: 1;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    display: inline-block;
+    font-size: 20px;
+    color: #ccc;
+    cursor: pointer;
+    padding: 0 1px;
+    user-select: none;
+    transition: color 0.15s;
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+    color: var(--color-primary);
+}
+
+.rating input:checked ~ label {
+    color: var(--color-primary);
+}
