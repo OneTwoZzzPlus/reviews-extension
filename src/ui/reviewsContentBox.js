@@ -93,8 +93,8 @@ export default function createReviewsContentBox(data) {
 
     const summariesHTML = data.summaries.map(item => `
         <div class="summary">
-            <span>${item.title ?? ''}</span>
-            <span>${item.value ?? ''}</span>
+            <span  class="summary-title">${item.title ?? ''}</span>: 
+            <span  class="summary-value">${item.value ?? ''}</span>
         </div>
     `).join('');
 
