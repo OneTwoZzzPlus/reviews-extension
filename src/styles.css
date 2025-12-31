@@ -41,49 +41,75 @@
     box-shadow: 0 0 0 2px rgba(100, 100, 100, 0.1);
 }
 
-/* Контейнер: заставляем его быть флексом во что бы то ни стало */
 #reviews-header-row {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: nowrap !important; /* ЗАПРЕТ ПЕРЕНОСА */
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    min-width: 400px; /* Чтобы точно хватило места в одну строку */
-    box-sizing: border-box !important;
-    margin: 15px 0 !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-width: 400px;
+    box-sizing: border-box;
+    margin: 15px 0;
 }
 
-/* Первый текст */
 #reviews-header {
-    display: block !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    white-space: nowrap !important;
-    font-size: 20px !important;
-    font-weight: bold !important;
-    flex-shrink: 0 !important; /* Не давать сжиматься */
+    display: block;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    font-size: 20px;
+    font-weight: bold;
+    flex-shrink: 0;
 }
 
-/* Контейнер кнопки: СБРОС ШИРИНЫ 100% */
 #reviews-isu-box {
-    display: block !important;
-    width: auto !important; /* ЭТО ОТМЕНЯЕТ ТВОЙ СТАРЫЙ СТИЛЬ */
-    margin: 0 !important;
-    padding: 0 !important;
-    flex-shrink: 0 !important;
+    display: block;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
 }
 
-/* Кнопка */
 #reviews-isu-box a {
-    display: inline-block !important;
-    background-color: #1846c7 !important;
-    color: #fff !important;
-    padding: 8px 16px !important;
-    border-radius: 6px !important;
-    text-decoration: none !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    line-height: 1 !important;
-    white-space: nowrap !important;
+    display: inline-block;
+    background-color: #1846c7;
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.karma {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top:8px;
+    font-size: inherit;
+    color: inherit;
+}
+
+.karma-btn {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #e7e7e7;
+    padding: 4px 8px;
+    font-size: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.karma-value {
+    min-width: 20px;
+    text-align: center;
+    font-size: inherit;
+    color: inherit;
+}
+
+.karma-btn:hover {
+    background: #dedede;
 }

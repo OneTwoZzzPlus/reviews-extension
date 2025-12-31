@@ -53,6 +53,11 @@ function createComments(commentsData, model = 0) {
                 ${item?.source ? ` источник "<a href=" ${item.source.link ?? ''}">${item.source.title}</a>"` : ''}
             </div>
             <div>${item.text}</div>
+            <div class="karma">
+              <button class="karma-btn">+</button>
+              <span class="karma-value">0</span>
+              <button class="karma-btn">−</button>
+            </div>
         </div>
     `).join('');
 }
