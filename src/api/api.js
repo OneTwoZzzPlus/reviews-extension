@@ -75,11 +75,11 @@ export async function fetchSubject(id) {
 }
 
 export async function fetchTeacherRate(id, user_rating) {
-    console.log(`[API] send /teacher/${id}/rate`);
+    console.log(`[API] send /teacher/${id}/rate ${user_rating}`);
     return await fetchJSON('POST', `/teacher/${id}/rate`, {"user_rating": user_rating})
 }
 
 export async function fetchCommentVote(id, user_karma) {
-    console.log(`[API] send /comment/${id}/vote`);
+    console.log(`[API] send /comment/${id}/vote ${user_karma}`);
     return await fetchJSON('POST', `/comment/${id}/vote`, {"user_karma": user_karma})
 }

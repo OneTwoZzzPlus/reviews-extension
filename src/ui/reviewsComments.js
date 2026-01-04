@@ -69,11 +69,15 @@ function createKarma(id, karma, user_karma) {
 
     upBtn.addEventListener("click", async (event) => {
         const data = await fetchCommentVote(id, user_karma === 1 ? 0 : 1);
-        updateKarma(karmaSpan, upBtn, downBtn, data.karma, data.user_karma)
+        user_karma = data.user_karma;
+        karma = data.karma;
+        updateKarma(karmaSpan, upBtn, downBtn, karma, user_karma);
     })
     downBtn.addEventListener("click", async (event) => {
         const data = await fetchCommentVote(id, user_karma === -1 ? 0 : -1 );
-        updateKarma(karmaSpan, upBtn, downBtn, data.karma, data.user_karma)
+        user_karma = data.user_karma;
+        karma = data.karma;
+        updateKarma(karmaSpan, upBtn, downBtn, karma, user_karma);
     })
 
     updateKarma(karmaSpan, upBtn, downBtn, karma, user_karma)
