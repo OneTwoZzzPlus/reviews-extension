@@ -1,6 +1,8 @@
 # Установка
 
-⚡ [Скачайте последнюю собранную версию тут](https://github.com/OneTwoZzzPlus/reviews-extension/releases/)
+⚡ [Скачайте последнюю собранную версию расширения тут](https://github.com/OneTwoZzzPlus/reviews-extension/releases/)
+
+❤ [Или попробуйте функциональность на сайте](https://onetwozzzplus.github.io/reviews-extension/)
 
 # Расширение с отзывами на преподавателей
 

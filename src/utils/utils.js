@@ -31,3 +31,37 @@ export function parseCommentDate(dateStr) {
         Number(mm)
     ).getTime();
 }
+
+export function setCookie(key, value, options = {}) {
+    const {
+        days = 1,
+        path = '/',
+        sameSite = 'Lax',
+        secure = false
+    } = options;
+
+    let cookie = `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+
+    if (days) {
+        cookie += `; max-age=${days * 86400}`;
+    }
+
+    cookie += `; path=${path}`;
+    cookie += `; SameSite=${sameSite}`;
+
+    if (secure) {
+        cookie += '; Secure';
+    }
+
+    document.cookie = cookie;
+}
+
+export function getCookie(key) {
+    const match = document.cookie
+        .split('; ')
+        .find(row => row.startsWith(encodeURIComponent(key) + '='));
+
+    return match
+        ? decodeURIComponent(match.split('=')[1])
+        : null;
+}

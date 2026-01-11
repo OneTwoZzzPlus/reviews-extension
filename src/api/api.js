@@ -86,3 +86,8 @@ export async function fetchCommentVote(id, user_karma) {
     console.log(`[API] send /comment/${id}/vote ${user_karma}`);
     return await fetchJSON('POST', `/comment/${id}/vote`, {"user_karma": user_karma})
 }
+
+export async function fetchAuthPLogin(username, password) {
+    console.log(`[API] send /authp/login`);
+    return await fetchJSON('POST', `/authp/login`, {"username": username, "password": password})
+}

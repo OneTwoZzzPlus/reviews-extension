@@ -2,8 +2,8 @@ import * as strings from "./ui/strings.js";
 import {createSearch, createTeacher, createSubject} from "./ui/ui.js";
 import {fetchSearch, fetchTeacher, fetchSubject} from "./api/api.js";
 
-export let isuBox;
-let statusBox, container, input;
+export let isuBox, container, statusBox;
+let input;
 let timeoutId;
 let abortController;
 

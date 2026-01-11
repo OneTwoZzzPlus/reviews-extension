@@ -260,3 +260,22 @@
 .rating input:checked ~ label {
     color: var(--color-primary);
 }
+
+/* ===============================
+   Login form
+================================ */
+
+.login-form {
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column; gap: 14px;
+}
+.login-form button {
+    width: 100%; padding: 14px; border-radius: 14px; border: none;
+    background: #2b2b2b; color: #fff; cursor: pointer; max-width: 420px;
+}
+.login-form button:hover {background: #000;}
+.login-form input[type="email"], .login-form input[type="password"] {
+    width: 100%; padding: 14px 16px; border-radius: 12px;
+    border: 1px solid #ddd; outline: none; max-width: 420px;
+}
+.login-form input[type="password"] {border: 2px solid #222;}
