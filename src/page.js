@@ -13,6 +13,7 @@ async function main() {
 }
 
 function openForm (_) {
+    console.log("opening form");
     container.innerHTML = "";
     container.appendChild(createLoginForm());
 }
@@ -20,6 +21,7 @@ function openForm (_) {
 function authenticate() {
     const token = getCookie('access_token');
     if (token) {
+        console.log("working" + token);
         setJwtToken(token)
         const payload = parseJwt(jwtToken);
         if (payload?.isu) {
@@ -27,6 +29,7 @@ function authenticate() {
         }
         isuBox.removeEventListener('click', openForm);
     } else {
+        console.log("adding event listener");
         isuBox.addEventListener('click', openForm);
     }
 }
