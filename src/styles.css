@@ -98,7 +98,6 @@
 ================================ */
 .search-list {
     width: 100%;
-    max-height: 300px;
     overflow-y: auto;
     margin-top: 10px;
     text-align: left;
