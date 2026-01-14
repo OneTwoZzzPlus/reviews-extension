@@ -28,6 +28,7 @@ async function fetchJSON(method, path, options = {}, controller = null) {
                 const resp = await fetch(urlRefresh, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({'refresh_token': refreshToken})
                 })
                 if (resp.ok) {
                     const res = await resp.json()
