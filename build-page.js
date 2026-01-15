@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const SRC_DIR = path.resolve(dirname, 'src');
+const STATIC_DIR = path.resolve(dirname, 'static');
 const PAGE_DIR = path.resolve(dirname, 'page');
 
 const API_HOST_VALUE = process.env.API_HOST_VALUE;
@@ -44,6 +45,12 @@ try {
         fs.copyFileSync(path.join(SRC_DIR, file), path.join(PAGE_DIR, file));
         console.log(`[build-page] ${file} copied`);
     });
+
+    // 4 Copy favicon
+    fs.copyFileSync(
+        path.join(STATIC_DIR, "favicon.ico"),
+        path.join(PAGE_DIR, "favicon.ico")
+    );
 
     console.log('[build-page] complete');
 } catch (err) {

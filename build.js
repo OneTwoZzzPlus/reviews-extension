@@ -5,6 +5,7 @@ import { fileURLToPath } from 'url';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const SRC_DIR = path.resolve(dirname, 'src');
+const STATIC_DIR = path.resolve(dirname, 'static');
 const DIST_DIR = path.resolve(dirname, 'dist');
 
 const API_HOST_VALUE = process.env.API_HOST_VALUE;
@@ -54,7 +55,7 @@ try {
     });
 
     // 4 Copy icons
-    const iconsSrc = path.join(SRC_DIR, 'icons');
+    const iconsSrc = path.join(STATIC_DIR, 'icons');
     const iconsDest = path.join(DIST_DIR, 'icons');
     fs.cpSync(iconsSrc, iconsDest, { recursive: true });
     console.log('[build] icons folder copied');
