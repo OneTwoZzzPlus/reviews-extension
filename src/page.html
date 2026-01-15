@@ -53,10 +53,18 @@
             <p id="reviews-isu-box"><a>Вход</a></p>
         </div>
         <div id="reviews-wrapper">
-            <label for="reviews-input">Поиск отзывов</label>
-            <input type="text" id="reviews-input" placeholder="Поиск..." />
+            <div id="reviews-input-wrapper">
+                <label for="reviews-input">Поиск отзывов</label>
+                <input type="text" id="reviews-input" placeholder="Поиск..." />
+                <button type="reset" id="reviews-input-reset" onclick="this.previousElementSibling.value = ''">&times;</button>
+            </div>
             <p id="reviews-status-box"></p>
             <div id="reviews-container"></div>
+            <div class="note">
+                Если вы хотите поддержать проект, поставьте <b>★</b> на
+                <a href="https://github.com/OneTwoZzzPlus/reviews-extension">репозиторий</a>. <br/>
+                Отзывы агрегированы из открытых источников.
+            </div>
         </div>
     </div>
     <script src="page.js"></script>

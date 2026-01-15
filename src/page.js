@@ -2,7 +2,6 @@
 
 import {createMainPage, isuBox, container} from "./main.js";
 import * as strings from "./ui/strings.js";
-import {note} from "./ui/ui.js";
 import {fetchAuthPLogin} from "./api/api.js";
 import {validateTokenISU, saveTokensPage, loadTokensPage} from "./api/authp.js";
 
@@ -16,7 +15,6 @@ async function main() {
 function openForm (_) {
     container.innerHTML = "";
     container.appendChild(createLoginForm());
-    container.appendChild(note);
 }
 
 function authenticate() {

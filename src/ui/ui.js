@@ -1,10 +1,13 @@
 import * as strings from "./strings";
 import createReviewsContentBox from "./reviewsContentBox.js";
 
-/** Уведомление снизу страницы */
-export const note = document.createElement("p");
-note.classList.add("note");
-note.innerHTML = strings.noteText;
+/** Меню */
+export function createMenu() {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("reviews-menu");
+    wrapper.innerHTML = "тут будет менюшка =)";
+    return wrapper;
+}
 
 /** Блок отзывов для вставки на сайт
  * @param {Teacher} data
@@ -15,7 +18,6 @@ export function createInjector(data) {
 
     const wrapper = document.createElement('div');
     wrapper.appendChild(reviewBox);
-    wrapper.appendChild(note);
 
     return wrapper;
 }
