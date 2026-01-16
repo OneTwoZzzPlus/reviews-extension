@@ -300,8 +300,9 @@
 }
 
 .reviews-menu-item {
+    cursor: pointer;
     background: var(--color-bg);
-    color: var(--color-muted);
+    color: var(--color-text);
     padding: var(--padding);
     border: var(--border);
     border-radius: var(--radius);
