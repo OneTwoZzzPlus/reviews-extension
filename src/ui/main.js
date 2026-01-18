@@ -9,15 +9,17 @@ import {fetchSearch, fetchTeacher, fetchSubject} from "../api/api.js";
 let isuBox, container, statusBox;
 let input, inputReset, menuBtn;
 let loginCallback = undefined;
-let content = 'empty';
+let logoutCallback = undefined;
+let content = 'dashboard';
 let isAuth = false;
 let timeoutId;
 let abortController;
 
 
 /** Контроллер страницы */
-export function createMainPage(logoutCallback, loginCallbackLocal=undefined) {
+export function createMainPage(logoutCallbackLocal, loginCallbackLocal=undefined) {
     loginCallback = loginCallbackLocal;
+    logoutCallback = logoutCallbackLocal;
     statusBox = document.querySelector('#reviews-status-box');
     isuBox = document.querySelector('#reviews-isu-box');
     container = document.querySelector('#reviews-container');
@@ -30,30 +32,35 @@ export function createMainPage(logoutCallback, loginCallbackLocal=undefined) {
         input.focus();
         clearMainPage();
     });
-    menuBtn.addEventListener('click', () => {
-        if (!isAuth) return;
-        content = 'menu';
-        statusBox.innerHTML = '';
-        container.innerHTML = '';
-        container.appendChild(createMenu(logoutCallback));
-    })
-    input.addEventListener('input', () => {
-        content = 'reviews';
-        // debouncer
-        clearTimeout(timeoutId);
-        timeoutId = setTimeout(search, 300);
+    menuBtn.addEventListener('click', clearMainPage)
+
+    input.addEventListener('input', inputEvent);
+    input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            inputEvent();
+        }
     });
+}
+
+/** Обработка отправки */
+function inputEvent() {
+    content = 'search';
+    // debouncer
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(search, 300);
 }
 
 /** Чистим страницу */
 export function clearMainPage() {
-    content = 'empty';
+    content = 'dashboard';
     statusBox.innerHTML = '';
     container.innerHTML = '';
+    container.appendChild(createMenu(isAuth, logoutCallback));
 }
 
 /** Открыть login форму */
 export function openLoginForm() {
+    content = 'login';
     container.innerHTML = "";
     container.appendChild(createLoginForm(loginCallback));
 }
@@ -63,6 +70,7 @@ export function resolveLogin(payload) {
     isAuth = true;
     isuBox.innerHTML = strings.authStatusText(payload?.isu, payload?.name);
     if (loginCallback !== undefined) isuBox.removeEventListener('click', openLoginForm);
+    clearMainPage()
 }
 
 /** В статус не авторизованного */
@@ -73,6 +81,7 @@ export function rejectLogin(isuBoxHTML) {
         isuBox.removeEventListener('click', openLoginForm);
         isuBox.addEventListener('click', openLoginForm);
     }
+    clearMainPage()
 }
 
 /** Обрабатываем ввод в строку поиска **/
@@ -92,8 +101,8 @@ async function search() {
     abortController = new AbortController();
 
     fetchSearch(name, abortController).then(data => {
+        if (content !== 'search') return;
         const searchBox = createSearch(data, load);
-        if (content !== 'reviews') return;
         if (searchBox) {
             statusBox.innerHTML = "";
             container.innerHTML = "";
@@ -103,7 +112,7 @@ async function search() {
             statusBox.innerHTML = strings.brokeSearchText;
         }
     }).catch(status => {
-        if (content !== 'reviews') return;
+        if (content !== 'search') return;
         container.innerHTML = "";
         statusBox.innerHTML = strings.statusSearchText(status);
     })
@@ -111,18 +120,28 @@ async function search() {
 
 /** Загрузка отзывов по преподу/предмету **/
 async function load(id, type) {
+    console.log(1);
+    if (content !== 'search') return;
+    console.log(2)
+    content = 'reviews'
     switch (type) {
         case 'teacher':
             fetchTeacher(id).then(data => {
                 const teacher = createTeacher(data);
+                console.log(3)
                 if (content !== 'reviews') return;
+                console.log(4)
                 if (teacher !== null) {
+                    console.log(5)
                     container.innerHTML = "";
                     container.appendChild(teacher);
+                    return;
                 }
-                else statusBox.innerHTML = strings.brokeReviewsText;
+                statusBox.innerHTML = strings.brokeReviewsText;
+                content = 'search';
             }).catch(status => {
                 statusBox.innerHTML = strings.statusReviewsText(status);
+                content = 'search';
             })
             break;
         case 'subject':
@@ -132,14 +151,18 @@ async function load(id, type) {
                 if (subject !== null) {
                     container.innerHTML = "";
                     container.appendChild(subject);
+                    return;
                 }
-                else statusBox.innerHTML = strings.brokeReviewsText;
+                statusBox.innerHTML = strings.brokeReviewsText;
+                content = 'search';
             }).catch(status => {
                 statusBox.innerHTML = strings.statusReviewsText(status);
+                content = 'search';
             })
             break;
         default:
             console.error(`Неизвестный type ${type}`);
             statusBox.innerHTML = strings.unknownTypeText;
+            content = 'search';
     }
 }

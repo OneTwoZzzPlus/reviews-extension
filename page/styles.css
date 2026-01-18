@@ -313,3 +313,12 @@
 .reviews-menu-item:hover {
     border-color: var(--color-hover);
 }
+
+.reviews-menu-item:disabled {
+    cursor: not-allowed;
+    background: var(--color-border);
+}
+
+.reviews-menu-item:disabled:hover {
+    border-color: var(--color-border);
+}

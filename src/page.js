@@ -4,6 +4,7 @@ import {createMainPage, clearMainPage, resolveLogin, rejectLogin} from "./ui/mai
 import {isAuth, loadTokensPage, resetTokensPage} from "./api/authp.js";
 
 const isuBoxHTML = `<a>Вход</a>`;
+const logoutConfirm = "Вы точно хотите выйти из аккаунта?";
 
 document.addEventListener('DOMContentLoaded', main);
 
@@ -27,6 +28,8 @@ function loginCallback() {
 
 function logoutCallback() {
     if (!isAuth()) return;
+    const confirmation = confirm(logoutConfirm);
+    if (!confirmation) return;
     resetTokensPage();
     rejectLogin(isuBoxHTML);
     clearMainPage();
