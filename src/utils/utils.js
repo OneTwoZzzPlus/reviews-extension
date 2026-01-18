@@ -17,11 +17,29 @@ export function parseJwt(token) {
 
 export function parseCommentDate(dateStr) {
     if (!dateStr) return -Infinity;
+
+    // "до YYYY"
+    const untilMatch = dateStr.toLowerCase().match(/^до\s+(\d{4})$/);
+    if (untilMatch) {
+        const [, year] = untilMatch;
+        // Return "00:00 01.01.YYYY"
+        return new Date(
+            Number(year),
+            0,
+            1,
+            0,
+            0
+        ).getTime();
+    }
+
     // "HH:MM DD.MM.YYYY"
     const match = dateStr.match(
         /(\d{2}):(\d{2})\s+(\d{2})\.(\d{2})\.(\d{4})/
     );
-    if (!match) return -Infinity;
+    if (!match) {
+        return -Infinity;
+    }
+
     const [, hh, mm, dd, MM, yyyy] = match;
     return new Date(
         Number(yyyy),
