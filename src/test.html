@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews</title>
+    <!--suppress HtmlUnknownTarget -->
+<!--    <link rel="icon" href="./favicon.ico" type="image/x-icon">-->
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        html {direction: rtl; overflow-y: scroll; height: 100%;}
+        body {direction: ltr; margin: 0; padding: 0; display: block;}
+        html::-webkit-scrollbar {width: 20px;}
+        html::-webkit-scrollbar-track {background: #fff;}
+        html::-webkit-scrollbar-thumb {background: #888; border-radius: 5px;}
+        html::-webkit-scrollbar-thumb:hover {background: #555;}
+        html {scrollbar-width: thin; scrollbar-color: #888 #fff;}
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        html {font-size: 16px;}
+        label {display: none;}
+        body {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen",
+            "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            text-align: left;
+            background: #fff;
+            color: #333;
+            overflow: hidden;
+        }
+        a {
+            cursor: pointer;
+            text-decoration: none;
+            background: transparent;
+            color: #1846c7;
+        }
+        .page-wrapper {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: max(50%, 800px);
+        }
+        #reviews-wrapper {
+            padding: var(--padding);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div id="reviews-header-row">
+            <p id="reviews-menu">☰</p>
+            <p id="reviews-header">Новый отзыв</p>
+            <p id="reviews-isu-box"><a>Вход</a></p>
+        </div>
+        <div id="reviews-wrapper">
+            <div id="reviews-input-wrapper" class="rev-input-wrapper">
+                <label for="reviews-input">Поиск отзывов</label>
+                <input type="text" id="reviews-input" class="rev-input" placeholder="Поиск..." />
+                <button type="reset" id="reviews-input-reset" class="rev-input-reset">&times;</button>
+            </div>
+            <p id="reviews-status-box"></p>
+            <div id="reviews-container">
+                <p class="add-rev-label">* Добавление нового отзыва, для преподавателя...</p>
+                <div id="addrev-teacher-input-wrapper" class="rev-input-wrapper">
+                    <label for="addrev-teacher-input">ФИО преподавателя</label>
+                    <input type="text" id="addrev-teacher-input" class="rev-input" placeholder="Иванов Иван Иванович" />
+                    <button type="reset" id="addrev-teacher-input-reset" class="rev-input-reset">&times;</button>
+                </div>
+                <div id="addrev-teacher-container">
+                    <div class="search-list">
+                        <div class="search-item">
+                            👨‍🏫
+                            Трифанова Екатерина Станиславовна
+                            <span class="search-id">118479</span>
+                        </div>
+                        <div class="search-item">
+                            👨‍🏫
+                            Правдин Константин Владимирович
+                            <span class="search-id">138626</span>
+                        </div>
+                        <div class="search-item">
+                            ➕ Добавить нового!
+                        </div>
+                    </div>
+                </div>
+                <p id="addrev-teacher-status" class="add-rev-status">Никого не выбрано</p>
+                <p class="add-rev-label">* По какому предмету вы его знаете? <i>(Выберите основной)</i></p>
+                <div id="addrev-subject-input-wrapper" class="rev-input-wrapper">
+                    <label for="addrev-subject-input">Название предмета</label>
+                    <input type="text" id="addrev-subject-input" class="rev-input" placeholder="Математический анализ" />
+                    <button type="reset" id="addrev-subject-input-reset" class="rev-input-reset">&times;</button>
+                </div>
+                <div id="addrev-subject-container">
+                    <div class="search-list">
+                        <div class="search-item">
+                            📚
+                            Дискретная математика
+                            <span class="search-id">14</span>
+                        </div>
+                        <div class="search-item">
+                            📚
+                            Математическая статистика
+                            <span class="search-id">24</span>
+                        </div>
+                        <div class="search-item">
+                            ➕ Добавить новый!
+                        </div>
+                    </div>
+                </div>
+                <p id="addrev-subject-status" class="add-rev-status">Ничего не выбрано</p>
+                <p class="add-rev-label">Какие еще предметы ведет? <i>(Отметьте, если знаете)</i></p>
+                <div id="addrev-sub-input-wrapper" class="rev-input-wrapper">
+                    <label for="addrev-sub-input">Название предмета</label>
+                    <input type="text" id="addrev-sub-input" class="rev-input" placeholder="Математический анализ" />
+                    <button type="reset" id="addrev-sub-input-reset" class="rev-input-reset">&times;</button>
+                </div>
+                <div id="addrev-sub-container">
+                    <div class="search-list">
+                        <div class="search-item">
+                            📚
+                            Дискретная математика
+                            <span class="search-id">14</span>
+                        </div>
+                        <div class="search-item">
+                            📚
+                            Математическая статистика
+                            <span class="search-id">24</span>
+                        </div>
+                        <div class="search-item">
+                            ➕ Добавить новый!
+                        </div>
+                    </div>
+                </div>
+                <div class="rev-list">
+                    <p id="addrev-sub-status" class="rev-list-title">Выбрано: </p>
+                    <div class="rev-list-item">
+                        Дискретная математика
+                        <button class="rev-list-item-reset">&times;</button>
+                    </div>
+                    <div class="rev-list-item">
+                        Математическая статистика
+                        <button class="rev-list-item-reset">&times;</button>
+                    </div>
+                    <div class="rev-list-item">
+                        <span class="add-rev-status">Новый:</span> ТФКП
+                        <button class="rev-list-item-reset">&times;</button>
+                    </div>
+                </div>
+                <p class="add-rev-label">
+                    * Что можете о нём сказать? <br/>
+                    <i>Что он за человек? Как он преподаёт? Трудно ли закрыться?</i>
+                </p>
+                <div class="comment-textarea-wrapper">
+                    <label for="addrev-comment-input">Комментарий</label>
+                    <textarea
+                            id="addrev-comment-input"
+                            class="comment-input"
+                            placeholder="Можно писать кратко (обычно пишут 3–5 предложений)..."
+                            maxlength="32768"
+                    ></textarea>
+                <div class="comment-char-counter">
+                    <span id="addrev-comment-char-count">0</span>/32768
+                </div>
+                <button id="addrev-commit" class="rev-button">Отправить анонимный отзыв</button>
+            </div>
+            <div class="note">
+                Если вы хотите поддержать проект, поставьте <b>★</b> на
+                <a href="https://github.com/OneTwoZzzPlus/reviews">репозиторий</a>. <br/>
+                Отзывы агрегированы из открытых источников.
+            </div>
+        </div>
+    </div>
+    <script src="page.js"></script>
+</body>
+</html>

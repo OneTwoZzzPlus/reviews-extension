@@ -4,8 +4,11 @@ import {createSearch} from "./tabs/tabSearch.js";
 import {createTeacher} from "./tabs/tabTeacher.js";
 import {createSubject} from "./tabs/tabSubject.js";
 import {createLoginForm} from "./tabs/tabLogin.js";
+import {createAddReviewForm} from "./tabs/tabAddReview.js";
 import {fetchSearch, fetchTeacher, fetchSubject} from "../api/api.js";
+import {mainHeader} from "../strings.js";
 
+let header;
 let isuBox, container, statusBox;
 let input, inputReset, menuBtn;
 let loginCallback = undefined;
@@ -26,6 +29,7 @@ export function createMainPage(logoutCallbackLocal, loginCallbackLocal=undefined
     input = document.querySelector('#reviews-input');
     inputReset = document.querySelector('#reviews-input-reset');
     menuBtn = document.querySelector('#reviews-menu');
+    header = document.querySelector('#reviews-header');
 
     inputReset.addEventListener('click', () => {
         input.value = '';
@@ -42,25 +46,23 @@ export function createMainPage(logoutCallbackLocal, loginCallbackLocal=undefined
     });
 }
 
-/** Обработка отправки */
-function inputEvent() {
-    content = 'search';
-    // debouncer
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(search, 300);
-}
-
 /** Чистим страницу */
 export function clearMainPage() {
     content = 'dashboard';
+    header.innerHTML = strings.mainHeader;
     statusBox.innerHTML = '';
     container.innerHTML = '';
-    container.appendChild(createMenu(isAuth, logoutCallback));
+    container.appendChild(createMenu(
+        isAuth,
+        logoutCallback,
+        openAddReviewCallback
+    ));
 }
 
 /** Открыть login форму */
 export function openLoginForm() {
     content = 'login';
+    header.innerHTML = strings.loginHeader;
     container.innerHTML = "";
     container.appendChild(createLoginForm(loginCallback));
 }
@@ -84,6 +86,14 @@ export function rejectLogin(isuBoxHTML) {
     clearMainPage()
 }
 
+/** Обработка отправки */
+function inputEvent() {
+    content = 'search';
+    // debouncer
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(search, 300);
+}
+
 /** Обрабатываем ввод в строку поиска **/
 async function search() {
     const name = input.value.trim();
@@ -102,6 +112,7 @@ async function search() {
 
     fetchSearch(name, abortController).then(data => {
         if (content !== 'search') return;
+        header.innerHTML = strings.mainHeader;
         const searchBox = createSearch(data, load);
         if (searchBox) {
             statusBox.innerHTML = "";
@@ -113,6 +124,7 @@ async function search() {
         }
     }).catch(status => {
         if (content !== 'search') return;
+        header.innerHTML = strings.mainHeader;
         container.innerHTML = "";
         statusBox.innerHTML = strings.statusSearchText(status);
     })
@@ -163,4 +175,12 @@ async function load(id, type) {
             statusBox.innerHTML = strings.unknownTypeText;
             content = 'search';
     }
+}
+
+function openAddReviewCallback() {
+    content = 'add-review';
+    header.innerHTML = strings.addHeader;
+    statusBox.innerHTML = '';
+    container.innerHTML = '';
+    container.appendChild(createAddReviewForm());
 }

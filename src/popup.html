@@ -28,7 +28,8 @@
             background: transparent;
             color: #1846c7;
         }
-        #reviews-header-row{
+        h2 { margin-top: 0; }
+        #reviews-header-wrapper{
             border: none !important;
             padding-left: 0 !important;
             padding-right: 0 !important;
@@ -37,16 +38,19 @@
 </head>
 <body>
     <div class="page-wrapper">
-        <div id="reviews-header-row">
-            <p id="reviews-menu">☰</p>
-            <p id="reviews-isu-box"><a href="https://my.itmo.ru">Вход</a></p>
-        </div>
-        <div id="reviews-wrapper">
+        <div id="reviews-header-wrapper">
+            <div id="reviews-header-row">
+                <p id="reviews-menu">☰</p>
+                <p id="reviews-header">Поиск отзывов</p>
+                <p id="reviews-isu-box"><a href="https://my.itmo.ru">Вход</a></p>
+            </div>
             <div id="reviews-input-wrapper" class="rev-input-wrapper">
                 <label for="reviews-input">Поиск отзывов</label>
                 <input type="text" id="reviews-input" class="rev-input" placeholder="Поиск..." />
                 <button type="reset" id="reviews-input-reset" class="rev-input-reset">&times;</button>
             </div>
+        </div>
+        <div id="reviews-wrapper">
             <p id="reviews-status-box"></p>
             <div id="reviews-container"></div>
             <div class="note">

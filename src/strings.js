@@ -52,3 +52,8 @@ export const loginLoadingBtnLabel = "Вход ⌛";
 export const menuLogoutBtnLabel = `<span class="error">💔 Выйти из аккаунта</span>`;
 export const menuAddReviewBtnLabel = "📝 Написать отзыв";
 export const menuMyReviewBtnLabel = "📋 Мои отзывы";
+
+/** Заголовки */
+export const mainHeader = "Поиск отзывов";
+export const loginHeader = "Вход";
+export const addHeader = "Новый отзыв";
