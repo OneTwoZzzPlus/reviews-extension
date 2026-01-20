@@ -75,8 +75,7 @@ function bindEvents(wrapper, root) {
         }
         if (e.target.classList.contains('rev-list-item-reset')) {
             const key = e.target.getAttribute('data-id');
-            console.log(key)
-            console.log('deleted? ' + state.subs.delete(key))
+            state.subs.delete(key)
             refreshList(root.subs, state.subs);
         }
         if (e.target === root.cancel) {
