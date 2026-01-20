@@ -36,7 +36,7 @@ export function authStatusText(isu, name) {
 }
 
 /** Иконки */
-export const symbols = {"teacher": "👨‍🏫", "subject": "📚"};
+export const symbols = {"teacher": "👨‍🏫", "subject": "📚", "add": "➕"};
 
 /** AuthP */
 export const authpLabel = `Это авторизация по <b>ID.ITMO</b> через прокси.<br/>

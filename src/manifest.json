@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Reviews",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Показывает отзывы о преподавателях на сайте my.itmo",
   "permissions": ["scripting", "activeTab", "cookies", "storage"],
   "host_permissions": ["<all_urls>"],

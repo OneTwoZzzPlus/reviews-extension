@@ -9,15 +9,15 @@ export function createMenu(isAuth, logoutCallback, openAddReviewCallback) {
     addReviewButton.classList.add("reviews-menu-item");
     addReviewButton.innerHTML = strings.menuAddReviewBtnLabel;
     addReviewButton.addEventListener("click", openAddReviewCallback)
-    addReviewButton.disabled = true;
+    // addReviewButton.disabled = true;
     wrapper.appendChild(addReviewButton);
 
     if (isAuth) {
-        const myReviewButton = document.createElement("button");
-        myReviewButton.classList.add("reviews-menu-item");
-        myReviewButton.innerHTML = strings.menuMyReviewBtnLabel;
-        myReviewButton.disabled = true; // TODO: onClick
-        wrapper.appendChild(myReviewButton);
+        // const myReviewButton = document.createElement("button");
+        // myReviewButton.classList.add("reviews-menu-item");
+        // myReviewButton.innerHTML = strings.menuMyReviewBtnLabel;
+        // myReviewButton.disabled = true; // TODO: onClick
+        // wrapper.appendChild(myReviewButton);
 
         const logoutButton = document.createElement("button");
         logoutButton.classList.add("reviews-menu-item");

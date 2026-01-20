@@ -31,6 +31,14 @@
     text-align: center;
 }
 
+.normal-text {
+    color: var(--color-text);
+}
+
+.muted-text {
+    color: var(--color-muted);
+}
+
 /*===== Header =====*/
 #reviews-header-wrapper {
     padding: var(--padding);
@@ -361,6 +369,7 @@
 }
 
 .rev-button {
+    cursor: pointer;
     width: 100%;
     font-weight: bold;
     background: var(--color-primary);
@@ -380,7 +389,7 @@
     margin-top: 0.5rem;
     width: 100%;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
 }
 
@@ -394,11 +403,13 @@
     cursor: pointer;
     background: var(--color-bg);
     color: var(--color-text);
-    padding: 0.325rem 2.325rem 0.325rem 0.325rem;
+    padding: 0.325rem 2.325rem 0.325rem 0.75rem;
     border: var(--border);
     border-radius: var(--radius);
     margin-bottom: var(--margin-block);
     margin-right: var(--margin-block);
+    white-space: normal;
+    word-break: break-word;
 }
 
 .rev-list-item-reset {

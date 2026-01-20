@@ -6,7 +6,6 @@ import {createSubject} from "./tabs/tabSubject.js";
 import {createLoginForm} from "./tabs/tabLogin.js";
 import {createAddReviewForm} from "./tabs/tabAddReview.js";
 import {fetchSearch, fetchTeacher, fetchSubject} from "../api/api.js";
-import {mainHeader} from "../strings.js";
 
 let header;
 let isuBox, container, statusBox;
