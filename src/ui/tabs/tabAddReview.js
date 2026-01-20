@@ -74,9 +74,10 @@ function bindEvents(wrapper, root) {
             root.subs.container.innerHTML = "";
         }
         if (e.target.classList.contains('rev-list-item-reset')) {
-            const key = e.target['data-id']
-            state.subs.delete(key)
-            e.target.closest('.rev-list-item').remove();
+            const key = e.target.getAttribute('data-id');
+            console.log(key)
+            console.log('deleted? ' + state.subs.delete(key))
+            refreshList(root.subs, state.subs);
         }
         if (e.target === root.cancel) {
             if (!isModerator) {
@@ -228,6 +229,7 @@ function loadList(rootEl, is, s, id, type, title) {
 }
 
 function refreshList(rootEl, s) {
+    console.log(s)
     if (s.size === 0) {
         rootEl.status.innerHTML = `<p class="add-rev-status">Ничего не выбрано</p>`;
         return;
@@ -240,10 +242,10 @@ function refreshList(rootEl, s) {
         <div class="rev-list">
             <p class="rev-list-title">Выбрано: </p>
             ${Array.from(s, ([title, item]) => `
-                <div class="rev-list-item" data-title="${title}">
+                <div class="rev-list-item">
                     ${item.id === null ? `<span class="muted-text">(новый)</span>` : ''}
                     ${item.title}
-                    <button class="rev-list-item-reset">&times;</button>
+                    <button class="rev-list-item-reset" data-id="${title}">&times;</button>
                 </div>
             `).join('')}
         </div>
