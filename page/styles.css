@@ -384,6 +384,23 @@
     background: var(--color-primary-hover);
 }
 
+.rev-button-s {
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    background: var(--color-bg);
+    color: var(--color-primary);
+    padding: var(--padding);
+    border-radius: var(--radius);
+    border: var(--border-none);
+    border-color: var(--color-border);
+    margin-top: var(--margin-block);
+}
+
+.rev-button-s:hover {
+    border-color: var(--color-hover);
+}
+
 /** Reviews List */
 .rev-list {
     margin-top: 0.5rem;

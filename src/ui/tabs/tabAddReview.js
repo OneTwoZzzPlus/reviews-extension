@@ -18,7 +18,7 @@ const emptyState = {
     subs: new Map(),
     comment: null,
 }
-let state = emptyState;
+let state = structuredClone(emptyState);
 
 /** Форма добавления отзыва */
 export function createAddReviewForm(newState=null, isUserModerator=false) {
@@ -33,7 +33,7 @@ export function createAddReviewForm(newState=null, isUserModerator=false) {
 
     if (newState !== null) state = newState;
 
-    refreshForm(root, state);
+    refreshForm(root);
 
     return wrapper;
 }
@@ -80,7 +80,7 @@ function bindEvents(wrapper, root) {
         }
         if (e.target === root.cancel) {
             if (!isModerator) {
-                clearForm();
+                clearForm(root);
             }
         }
         if (e.target === root.submit) {
@@ -257,12 +257,12 @@ function refreshComment(rootEl, s) {
     rootEl.input.value = s;
 }
 
-function clearForm(root, state) {
-    state = emptyState;
-    refreshForm(root, state);
+function clearForm(root) {
+    state = structuredClone(emptyState);
+    refreshForm(root);
 }
 
-function refreshForm(root, state) {
+function refreshForm(root) {
     refreshSingle(root.teacher, state.teacher);
     refreshSingle(root.subject, state.subject);
     refreshList(root.subs, state.subs);
@@ -354,8 +354,8 @@ function renderAddReviewForm() {
         <button id="addrev-commit" class="rev-button">
             ${isModerator ? "Добавить отзыв" : "Отправить анонимный отзыв"}
         </button>
-        <div id="addrev-cancel" class="note">
-            <a>${isModerator ? "Отклонить отзыв" : "Очистить"}</a>
-        </div>
+        <button id="addrev-cancel" class="rev-button-s">
+            ${isModerator ? "Отклонить отзыв" : "Очистить"}
+        </button>
     `
 }
