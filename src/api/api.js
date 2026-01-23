@@ -129,7 +129,7 @@ export async function fetchGetSuggestionList() {
 
 export async function fetchGetSuggestion(id) {
     console.log(`[API] send GET /suggestion/${id}`);
-    return await fetchJSON('POST', `/suggestion/${id}`)
+    return await fetchJSON('GET', `/suggestion/${id}`)
 }
 
 export async function fetchCommitSuggestion(id, body) {

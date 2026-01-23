@@ -1,7 +1,10 @@
 import * as strings from "../../strings.js";
 
 /** Меню */
-export function createMenu(isAuth, isUserModerator, logoutCallback, openAddReviewCallback) {
+export function createMenu(isAuth, isUserModerator,
+                           logoutCallback,
+                           openAddReviewCallback,
+                           openModeratorPanelCallback) {
     const wrapper = document.createElement("div");
     wrapper.classList.add("reviews-menu");
 
@@ -16,7 +19,8 @@ export function createMenu(isAuth, isUserModerator, logoutCallback, openAddRevie
         const myReviewButton = document.createElement("button");
         myReviewButton.classList.add("reviews-menu-item");
         myReviewButton.innerHTML = strings.menuMyReviewBtnLabel;
-        myReviewButton.disabled = true;
+        myReviewButton.addEventListener("click", openModeratorPanelCallback)
+        // myReviewButton.disabled = true;
         wrapper.appendChild(myReviewButton);
     }
 

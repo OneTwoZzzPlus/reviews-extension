@@ -496,3 +496,20 @@
 .comment-char-counter.limit-exceeded {
     color: var(--color-danger);
 }
+
+/** Suggestion list */
+
+.suggestions-list {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.suggestions-list-item {
+    width: 100%;
+    padding: var(--padding);
+    border: var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.5rem;
+}

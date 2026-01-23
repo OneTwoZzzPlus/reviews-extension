@@ -25,8 +25,10 @@ export function getElements(root) {
             input: root.querySelector("#addrev-comment-input"),
             counter: root.querySelector("#addrev-comment-char-count"),
         },
-        submit: root.querySelector("#addrev-commit"),
+        submit: root.querySelector("#addrev-submit"),
         cancel: root.querySelector("#addrev-cancel"),
+        reject: root.querySelector("#addrev-reject"),
+        spam: root.querySelector("#addrev-spam"),
     };
 }
 
@@ -83,11 +85,19 @@ export function renderAddReviewForm(isUserModerator) {
                 <span id="addrev-comment-char-count">0</span>/${MAX_TEXTAREA}
             </div>
         </div>
-        <button id="addrev-commit" class="rev-button">
+        <button id="addrev-submit" class="rev-button">
             ${isUserModerator ? "Добавить отзыв" : "Отправить анонимный отзыв"}
         </button>
+        ${isUserModerator ?
+        `<button id="addrev-spam" class="rev-button-s">
+            Отправить в спам
+        </button>`: ''}
+        ${isUserModerator ?
+        `<button id="addrev-reject" class="rev-button-s">
+            Отклонить (нарушает правила)
+        </button>`: ''}
         <button id="addrev-cancel" class="rev-button-s">
-            ${isUserModerator ? "Отклонить отзыв" : "Очистить"}
+            ${isUserModerator ? "Отмена" : "Очистить"}
         </button>
     `
 }

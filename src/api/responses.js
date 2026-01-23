@@ -42,4 +42,33 @@
  * @typedef {{
  *     access: string
  * }} SuggestionCancelResponse
+ *
+ * @typedef {{
+ *     items: Array<{
+ *         id: number,
+ *         status: string,
+ *         title: string
+ *     }>
+ * }} SuggestionListResponse
+ *
+ * @typedef {{
+ *   id: number,
+ *   status: string | null,
+ *   user_isu: number | null,
+ *   moderator_isu: number | null,
+ *   text: string,
+ *   teacher: {
+ *     id: number,
+ *     title: string
+ *   },
+ *   subject: {
+ *     id: number,
+ *     title: string
+ *   },
+ *   subs: Array<{
+ *     id: number,
+ *     title: string
+ *   }>,
+ *   comment_id: number
+ * }} SuggestionGetResponse
  */

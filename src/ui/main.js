@@ -5,7 +5,15 @@ import {createTeacher} from "./tabs/tabTeacher.js";
 import {createSubject} from "./tabs/tabSubject.js";
 import {createLoginForm} from "./tabs/tabLogin.js";
 import {createAddReviewForm} from "./tabs/tabAddReview.js";
-import {fetchSearch, fetchTeacher, fetchSubject, fetchIsModerator} from "../api/api.js";
+import {
+    fetchSearch,
+    fetchTeacher,
+    fetchSubject,
+    fetchIsModerator,
+    fetchGetSuggestionList,
+    fetchGetSuggestion
+} from "../api/api.js";
+import {createListReviewsForm} from "./tabs/tabListReviews.js";
 
 let header;
 let isuBox, container, statusBox;
@@ -55,7 +63,8 @@ export function clearMainPage() {
     container.appendChild(createMenu(
         isAuth, isUserModerator,
         logoutCallback,
-        openAddReviewCallback
+        openAddReview,
+        openModeratorPanel
     ));
 }
 
@@ -187,10 +196,47 @@ async function load(id, type) {
     }
 }
 
-function openAddReviewCallback() {
+function openAddReview() {
     content = 'add-review';
     header.innerHTML = strings.addHeader;
     statusBox.innerHTML = '';
     container.innerHTML = '';
     container.appendChild(createAddReviewForm(clearMainPage));
+}
+
+function openModeratorPanel() {
+    if (!isUserModerator) return;
+    content = 'moderator';
+    header.innerHTML = strings.moderationHeader;
+    statusBox.innerHTML = 'Загрузка отзыва...';
+    container.innerHTML = '';
+
+    fetchGetSuggestionList().then(data => {
+        if (content !== 'moderator') return;
+        statusBox.innerHTML = '';
+        container.innerHTML = '';
+        container.appendChild(createListReviewsForm(openModerationReview, data));
+    }).catch(status => {
+        if (status === 404) statusBox.innerHTML = 'Предложка пуста =)';
+        statusBox.innerHTML = `Сервер ответил ${status}`;
+    })
+
+}
+
+function openModerationReview(id) {
+    if (!isUserModerator) return;
+    content = 'moderator-review';
+    header.innerHTML = strings.moderationHeader;
+    statusBox.innerHTML = 'Загрузка предложки...';
+
+    fetchGetSuggestion(id).then(data => {
+        statusBox.innerHTML = '';
+        container.innerHTML = '';
+        container.appendChild(createAddReviewForm(
+            openModeratorPanel, data, true
+        ));
+    }).catch(status => {
+        if (status === 404) statusBox.innerHTML = 'Нет такого отзыва в предложке =(';
+        statusBox.innerHTML = `Сервер ответил ${status}`;
+    })
 }

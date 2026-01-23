@@ -21,8 +21,12 @@ const emptyState = {
 }
 let state = structuredClone(emptyState);
 
-/** Форма добавления отзыва */
-export function createAddReviewForm(clearFormCallbackLocal, modeModerator=false, suggestionId=null) {
+/** Форма добавления отзыва
+ * @param clearFormCallbackLocal
+ * @param {SuggestionGetResponse|null} data
+ * @param {boolean} modeModerator
+ * */
+export function createAddReviewForm(clearFormCallbackLocal, data=null, modeModerator=false) {
     isUserModerator = modeModerator;
     clearFormCallback = clearFormCallbackLocal;
 
@@ -32,6 +36,14 @@ export function createAddReviewForm(clearFormCallbackLocal, modeModerator=false,
     const root = getElements(wrapper);
 
     bindEvents(wrapper, root)
+
+    if (data) {
+        state.id = data.id;
+        state.teacher = data.teacher;
+        state.subject = data.subject;
+        state.comment = data.text;
+        state.subs = new Map(data.subs.map(item => [item.title, item]));
+    }
 
     refreshForm(root);
 
@@ -78,20 +90,27 @@ function bindEvents(wrapper, root) {
             state.subs.delete(key)
             refreshList(root.subs, state.subs);
         }
-        if (e.target === root.cancel) {
-            if (isUserModerator) {
-                cancelSuggestion()
-            } else {
-                clearForm(root);
-            }
-        }
-        if (e.target === root.submit) {
-            if (isUserModerator) {
+        if (isUserModerator) {
+            if (e.target === root.submit) {
+                console.log('submit')
                 // TODO: commitSuggestion
-            } else {
+            }
+            if (e.target === root.reject) {
+                rejectSuggestion('rejected')
+            }
+            if (e.target === root.spam) {
+                rejectSuggestion('spam')
+            }
+            if (e.target === root.cancel) {
+                clearFormCallback();
+            }
+        } else {
+            if (e.target === root.submit) {
                 sendSuggestion()
             }
-
+            if (e.target === root.cancel) {
+                clearForm(root);
+            }
         }
     });
     function inputEvent (e)  {
@@ -184,17 +203,16 @@ function sendSuggestion() {
     })
 }
 
-function cancelSuggestion() {
+function rejectSuggestion(status) {
     if (state.id !== null) {
-        const confirmation = confirm("Отклонить отзыв?");
+        const confirmation = confirm(`Отклонить отзыв (${status})?`);
         if (confirmation) {
             /** @param {SuggestionCancelResponse} data */
-            fetchCancelSuggestion(state.id, 'rejected').then(data => {
-                if (data.status === 'rejected') {
-                    clearFormCallback();
-                } else {
-                    alert(`Отклонить отзыв не удалось, он в состоянии: ${data.status}`);
+            fetchCancelSuggestion(state.id, status).then(data => {
+                if (data.status !== status) {
+                    alert('Статус не сохранён')
                 }
+                clearFormCallback();
             }).catch(status => {
                 alert(`Сервер ответил ${status}`);
             })

@@ -60,3 +60,7 @@ export const menuMyReviewBtnLabel = "📋 Модерация";
 export const mainHeader = "Поиск отзывов";
 export const loginHeader = "Вход";
 export const addHeader = "Новый отзыв";
+export const moderationHeader = "Модерация";
+
+/** Статусы предложки */
+export const suggestionStatus = {"delayed": "на рассмотрении", "accepted": "опубликован", "rejected": "отклонён"}
