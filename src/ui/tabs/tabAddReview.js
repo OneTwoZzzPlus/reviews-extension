@@ -1,7 +1,7 @@
 import * as strings from "../../strings.js";
 import {normalizeString} from "../../utils/utils.js"
 import {renderAddReviewForm, getElements, MAX_TEXTAREA} from "./creation/addReviewForm.js";
-import {fetchCancelSuggestion, fetchSearch, fetchSendSuggestion} from "../../api/api.js";
+import {fetchCancelSuggestion, fetchCommitSuggestion, fetchSearch, fetchSendSuggestion} from "../../api/api.js";
 import {createSearch} from "./tabSearch.js";
 
 let isUserModerator = false;
@@ -92,16 +92,16 @@ function bindEvents(wrapper, root) {
         }
         if (isUserModerator) {
             if (e.target === root.submit) {
-                console.log('submit')
-                // TODO: commitSuggestion
+                commitSuggestion()
             }
-            if (e.target === root.reject) {
+            if (e.target === root.cancel) {
                 rejectSuggestion('rejected')
             }
             if (e.target === root.spam) {
                 rejectSuggestion('spam')
             }
-            if (e.target === root.cancel) {
+            if (e.target === root.exit) {
+                state = structuredClone(emptyState);
                 clearFormCallback();
             }
         } else {
@@ -203,23 +203,57 @@ function sendSuggestion() {
     })
 }
 
-function rejectSuggestion(status) {
-    if (state.id !== null) {
-        const confirmation = confirm(`Отклонить отзыв (${status})?`);
-        if (confirmation) {
-            /** @param {SuggestionCancelResponse} data */
-            fetchCancelSuggestion(state.id, status).then(data => {
-                if (data.status !== status) {
-                    alert('Статус не сохранён')
-                }
-                clearFormCallback();
-            }).catch(status => {
-                alert(`Сервер ответил ${status}`);
-            })
-        }
-    } else {
-        alert('State.id пустой!')
+function commitSuggestion() {
+    if (state.id === null) alert('Suggestion id пустой!')
+
+    if (state.teacher.id === null) {
+        alert("Выберите существующего преподавателя");
+        return;
     }
+    if (state.subject.id === null) {
+        alert("Выберите существующий основной предмет");
+        return;
+    }
+    for (let s in state.subs) {
+        if (s.id === null) {
+            alert("Выберите существующие предметы");
+            return;
+        }
+    }
+    if (normalizeString(state.comment).length === 0) {
+        alert("Перепроверьте текст отзыва, он пустой");
+        return;
+    }
+    const requestBody = {
+        teacher: state.teacher,
+        subject: state.subject,
+        subs: Array.from(state.subs.values()),
+        text: state.comment,
+    }
+    // console.info(JSON.stringify(requestBody));
+    fetchCommitSuggestion(state.id, requestBody).then(_ => {
+        state = structuredClone(emptyState);
+        clearFormCallback();
+    }).catch(status => {
+        alert(`Сервер ответил ${status}`)
+    })
+}
+
+function rejectSuggestion(status) {
+    if (state.id === null) alert('Suggestion id пустой!')
+
+    const confirmation = confirm(`Отклонить отзыв (${status})?`);
+    if (!confirmation) return;
+
+    /** @param {SuggestionCancelResponse} data */
+    fetchCancelSuggestion(state.id, status).then(data => {
+        if (data.status !== status) {
+            alert('Статус не сохранён')
+        }
+        clearFormCallback();
+    }).catch(status => {
+        alert(`Сервер ответил ${status}`);
+    })
 }
 
 function search(rootEl, is, s, load) {

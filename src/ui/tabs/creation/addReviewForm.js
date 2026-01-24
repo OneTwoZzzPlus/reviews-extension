@@ -27,13 +27,18 @@ export function getElements(root) {
         },
         submit: root.querySelector("#addrev-submit"),
         cancel: root.querySelector("#addrev-cancel"),
-        reject: root.querySelector("#addrev-reject"),
+        exit: root.querySelector("#addrev-exit"),
         spam: root.querySelector("#addrev-spam"),
     };
 }
 
 export function renderAddReviewForm(isUserModerator) {
     return `
+        ${isUserModerator ?
+        `<button id="addrev-spam" class="rev-button-s">
+            Отправить в спам
+        </button>`: ''}
+
         <p class="add-rev-label">* Добавление нового отзыва, для преподавателя...</p>
         <div id="addrev-teacher-input-wrapper" class="rev-input-wrapper">
             <label for="addrev-teacher-input">ФИО преподавателя</label>
@@ -88,16 +93,12 @@ export function renderAddReviewForm(isUserModerator) {
         <button id="addrev-submit" class="rev-button">
             ${isUserModerator ? "Добавить отзыв" : "Отправить анонимный отзыв"}
         </button>
-        ${isUserModerator ?
-        `<button id="addrev-spam" class="rev-button-s">
-            Отправить в спам
-        </button>`: ''}
-        ${isUserModerator ?
-        `<button id="addrev-reject" class="rev-button-s">
-            Отклонить (нарушает правила)
-        </button>`: ''}
         <button id="addrev-cancel" class="rev-button-s">
-            ${isUserModerator ? "Отмена" : "Очистить"}
+            ${isUserModerator ? "Отклонить (нарушает правила)" : "Очистить"}
         </button>
+        ${isUserModerator ?
+        `<button id="addrev-exit" class="rev-button-s">
+            Отмена
+        </button>`: ''}
     `
 }
