@@ -63,6 +63,7 @@ export function clearMainPage() {
     container.appendChild(createMenu(
         isAuth, isUserModerator,
         logoutCallback,
+        load,
         openAddReview,
         openModeratorPanel
     ));
@@ -132,7 +133,10 @@ async function search() {
     fetchSearch(name, abortController).then(data => {
         if (content !== 'search') return;
         header.innerHTML = strings.mainHeader;
-        const searchBox = createSearch(data, load);
+        const searchBox = createSearch(data, (id, type) => {
+            if (content !== 'search') return;
+            load(id, type);
+        });
         if (searchBox) {
             statusBox.innerHTML = "";
             container.innerHTML = "";
@@ -151,7 +155,6 @@ async function search() {
 
 /** Загрузка отзывов по преподу/предмету **/
 async function load(id, type) {
-    if (content !== 'search') return;
     content = 'reviews'
     statusBox.innerHTML = strings.loadingText;
     switch (type) {

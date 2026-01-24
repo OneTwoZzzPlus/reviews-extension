@@ -3,6 +3,7 @@ import * as strings from "../../strings.js";
 /** Меню */
 export function createMenu(isAuth, isUserModerator,
                            logoutCallback,
+                           loadReviewsCallback,
                            openAddReviewCallback,
                            openModeratorPanelCallback) {
     const wrapper = document.createElement("div");
