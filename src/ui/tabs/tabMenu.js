@@ -12,7 +12,6 @@ export function createMainPageFilling(isAuth, isUserModerator,
     wrapper.appendChild(createMenu(
         isAuth, isUserModerator,
         logoutCallback,
-        loadReviewsCallback,
         openAddReviewCallback,
         openModeratorPanelCallback
     ));
