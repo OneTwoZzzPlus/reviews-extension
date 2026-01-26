@@ -11,6 +11,8 @@ import {refreshToken, accessToken, isAccessTokenExpired,
  * @param {AbortController} [controller]
  */
 async function fetchJSON(method, path, options = {}, controller = null) {
+    console.log(`[API] send ${method} ${path} ${options === {} ? '' : `with options = ${JSON.stringify(options)}`}`);
+
     const url = new URL(path, API_HOST);
 
     const fetchOptions = {
@@ -58,7 +60,7 @@ async function fetchJSON(method, path, options = {}, controller = null) {
     return new Promise((resolve, reject) => {
         fetch(url, fetchOptions).then(async (res) => {
             if (res.ok) {
-                console.log(`[API] fetch resolved`);
+                console.log(`[API] fetch resolved ${method} ${path}`);
                 const text = await res.text();
                 resolve(text ? JSON.parse(text) : {});
             } else {
@@ -75,69 +77,57 @@ async function fetchJSON(method, path, options = {}, controller = null) {
                 console.error('[API] network error:', err);
                 reject(0);
             } else {
-                console.log(`[API] fetch aborted`);
+                console.log(`[API] fetch aborted ${method} ${path}`);
             }
         });
     });
 }
 
 export async function fetchSearch(query, controller, strainer=null) {
-    console.log(`[API] send /search for "${query}"`);
     const options = strainer === null ? {"query": query} : {"query": query, "strainer": strainer}
     return await fetchJSON('GET', '/search', options, controller)
 }
 
 export async function fetchTeacher(id) {
-    console.log(`[API] send /teacher for "${id}"`);
     return await fetchJSON('GET', `/teacher/${id}`, {})
 }
 
 export async function fetchSubject(id) {
-    console.log(`[API] send /subject for "${id}"`);
     return await fetchJSON('GET', `/subject/${id}`, {})
 }
 
 export async function fetchTeacherRate(id, user_rating) {
-    console.log(`[API] send /teacher/${id}/rate ${user_rating}`);
     return await fetchJSON('POST', `/teacher/${id}/rate`, {"user_rating": user_rating})
 }
 
 export async function fetchCommentVote(id, user_karma) {
-    console.log(`[API] send /comment/${id}/vote ${user_karma}`);
     return await fetchJSON('POST', `/comment/${id}/vote`, {"user_karma": user_karma})
 }
 
+export async function fetchSendSuggestion(body) {
+    return await fetchJSON('POST', `/suggestion`, body)
+}
+
 export async function fetchAuthPLogin(username, password) {
-    console.log(`[API] send /authp/login`);
     return await fetchJSON('POST', `/authp/login`, {"username": username, "password": password})
 }
 
 export async function fetchIsModerator() {
-    console.log(`[API] send GET /moderator`);
-    return await fetchJSON('GET', `/moderator`)
-}
-
-export async function fetchSendSuggestion(body) {
-    console.log(`[API] send POST /suggestion`);
-    return await fetchJSON('POST', `/suggestion`, body)
+    return await fetchJSON('GET', `/mod`)
 }
 
 export async function fetchGetSuggestionList() {
-    console.log(`[API] send GET /suggestion`);
-    return await fetchJSON('GET', `/suggestion`)
+    return await fetchJSON('GET', `/mod/suggestion`)
 }
 
 export async function fetchGetSuggestion(id) {
-    console.log(`[API] send GET /suggestion/${id}`);
-    return await fetchJSON('GET', `/suggestion/${id}`)
+    return await fetchJSON('GET', `/mod/suggestion/${id}`)
 }
 
 export async function fetchCommitSuggestion(id, body) {
-    console.log(`[API] send POST /suggestion/${id}/commit`);
-    return await fetchJSON('POST', `/suggestion/${id}/commit`, body)
+    return await fetchJSON('POST', `/mod/suggestion/${id}/commit`, body)
 }
 
 export async function fetchCancelSuggestion(id, status='rejected') {
-    console.log(`[API] send POST /suggestion/${id}/cancel status=${status}`);
-    return await fetchJSON('POST', `/suggestion/${id}/cancel`, {'status': status})
+    return await fetchJSON('POST', `/mod/suggestion/${id}/cancel`, {'status': status})
 }
