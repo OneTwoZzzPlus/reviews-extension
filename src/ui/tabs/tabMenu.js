@@ -1,5 +1,5 @@
 import * as strings from "../../strings.js";
-import {renderMainPage} from "./creation/addMainPage.js";
+import {renderMainPage} from "./creation/renderMainPage.js";
 
 /** Меню */
 export function createMainPageFilling(isAuth, isUserModerator,

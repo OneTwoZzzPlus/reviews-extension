@@ -1,6 +1,6 @@
 import * as strings from "../../strings.js";
 import {normalizeString} from "../../utils/utils.js"
-import {renderAddReviewForm, getElements, MAX_TEXTAREA} from "./creation/addReviewForm.js";
+import {renderAddReviewForm, getElements, MAX_TEXTAREA} from "./creation/renderReviewForm.js";
 import {fetchCancelSuggestion, fetchCommitSuggestion, fetchSearch, fetchSendSuggestion} from "../../api/api.js";
 import {createSearch} from "./tabSearch.js";
 
