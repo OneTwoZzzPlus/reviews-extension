@@ -5,6 +5,7 @@ import {fetchCancelSuggestion, fetchCommitSuggestion, fetchSearch, fetchSendSugg
 import {createSearch} from "./tabSearch.js";
 
 let modeModerator = false;
+let isSent = false;
 let clearFormCallback = undefined;
 const emptyState = {
     id: null,
@@ -195,13 +196,17 @@ function sendSuggestion() {
         subs: Array.from(state.subs.values()),
         text: state.comment,
     }
-    // console.info(JSON.stringify(requestBody));
+
+    if (isSent) return;
+    isSent = true;
     fetchSendSuggestion(requestBody).then(_ => {
-        alert("Спасибо! Отзыв будет опубликован как только пройдёт модерацию =)")
         state = structuredClone(emptyState);
+        alert("Спасибо! Отзыв будет опубликован как только пройдёт модерацию =)")
+        isSent = false;
         clearFormCallback();
     }).catch(status => {
         alert(`Сервер ответил ${status}`)
+        isSent = false;
     })
 }
 
@@ -232,12 +237,16 @@ function commitSuggestion() {
         subs: Array.from(state.subs.values()),
         text: state.comment,
     }
-    // console.info(JSON.stringify(requestBody));
+
+    if (isSent) return;
+    isSent = true;
     fetchCommitSuggestion(state.id, requestBody).then(_ => {
         state = structuredClone(emptyState);
         clearFormCallback();
+        isSent = false;
     }).catch(status => {
         alert(`Сервер ответил ${status}`)
+        isSent = false;
     })
 }
 
@@ -248,13 +257,18 @@ function rejectSuggestion(status) {
     if (!confirmation) return;
 
     /** @param {SuggestionCancelResponse} data */
+    if (isSent) return;
+    isSent = true;
     fetchCancelSuggestion(state.id, status).then(data => {
         if (data.status !== status) {
-            alert('Статус не сохранён')
+            alert('Статус не сохранён');
+            return;
         }
         clearFormCallback();
+        isSent = false;
     }).catch(status => {
         alert(`Сервер ответил ${status}`);
+        isSent = false;
     })
 }
 
