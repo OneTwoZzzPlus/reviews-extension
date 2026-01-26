@@ -23,66 +23,67 @@ export function renderMainPage() {
             </div>
         </div>
 
-<!--        <div class="category">-->
-<!--            <h3 class="category-title">Математика</h3>-->
-<!--            <div class="tiles-container">-->
-<!--                <div class="tile red">Матанализ</div>-->
-<!--                <div class="tile red">Матанализ (прод)</div>-->
-<!--                <div class="tile red">Алгебра</div>-->
-<!--                <div class="tile red">Алгебра (прод)</div>-->
-<!--                <div class="tile red">Дискретная математика</div>-->
-<!--                <div class="tile red">Теорвер</div>-->
-<!--                <div class="tile red">Матстат</div>-->
-<!--                <div class="tile red">ДГМА</div>-->
-<!--                <div class="tile red">ТФКП</div>-->
-<!--                <div class="tile red">Основы теории игр</div>-->
-<!--                <div class="tile red">Дифференциальные уравнения</div>-->
-<!--                <div class="tile red">Численные методы моделирования</div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="category">-->
-<!--            <h3 class="category-title">ПИН</h3>-->
-<!--            <div class="tiles-container">-->
-<!--                <div class="tile yellow">Программирование</div>-->
-<!--                <div class="tile yellow">Алгосы</div>-->
-<!--                <div class="tile yellow">Инфоком</div>-->
-<!--                <div class="tile yellow">ПиРБД</div>-->
-<!--                <div class="tile yellow">ООП</div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="category">-->
-<!--            <h3 class="category-title">ВТ</h3>-->
-<!--            <div class="tiles-container">-->
-<!--                <div class="tile purple">Дискретка (база³)</div>-->
-<!--                <div class="tile purple">Дискретка (прод)</div>-->
-<!--                <div class="tile purple">ОПД</div>-->
-<!--                <div class="tile purple">Программирование</div>-->
-<!--                <div class="tile purple">Информатика</div>-->
-<!--                <div class="tile purple">БД</div>-->
-<!--                <div class="tile purple">ЯПы</div>-->
-<!--                <div class="tile purple">web</div>-->
-<!--                <div class="tile purple">Арх ЭВМ</div>-->
-<!--                <div class="tile purple">ИБ</div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-<!--        <div class="category">-->
-<!--            <h3 class="category-title">История</h3>-->
-<!--            <div class="tiles-container">-->
-<!--                <div class="tile blue">История русской культуры в контексте мировой культуры</div>-->
-<!--                <div class="tile blue">Россия в истории современных международных отношений</div>-->
-<!--                <div class="tile blue">Реформы и реформаторы в истории России</div>-->
-<!--                <div class="tile blue">История российской науки и техники</div>-->
-<!--                <div class="tile blue">История России и мира в ХХ веке</div>-->
-<!--                <div class="tile blue">Социальная история России</div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="category">
+            <h3 class="category-title">Математика</h3>
+            <div class="tiles-container">
+                <div class="tile red" data-id="10">Матанализ</div>
+                <div class="tile red" data-id="11">Матанализ (прод)</div>
+                <div class="tile red" data-id="12">Алгебра</div>
+                <div class="tile red" data-id="13">Алгебра (прод)</div>
+                <div class="tile red" data-id="14">Дискретная математика</div>
+                <div class="tile red" data-id="23">Теорвер</div>
+                <div class="tile red" data-id="24">Матстат</div>
+                <div class="tile red" data-id="38">ДГМА</div>
+                <div class="tile red" data-id="39">ТФКП</div>
+                <div class="tile red" data-id="40">Основы теории игр</div>
+                <div class="tile red" data-id="37">Дифференциальные уравнения</div>
+                <div class="tile red" data-id="41">Численные методы моделирования</div>
+            </div>
+        </div>
 
         <div class="category">
-            <h3 class="category-title">Предложения? Пожелания?</h3>
-            <a href="https://t.me/reviews_ext">Напишите в директ</a>
+            <h3 class="category-title">ПИН</h3>
+            <div class="tiles-container">
+                <div class="tile yellow" data-id="15">Программирование</div>
+                <div class="tile yellow" data-id="16">Алгосы</div>
+                <div class="tile yellow" data-id="17">Инфоком</div>
+                <div class="tile yellow" data-id="19">ПиРБД</div>
+                <div class="tile yellow" data-id="46">ООП</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h3 class="category-title">ВТ</h3>
+            <div class="tiles-container">
+                <div class="tile purple" data-id="42">Дискретка (база³)</div>
+                <div class="tile purple" data-id="43">Дискретка (прод)</div>
+                <div class="tile purple" data-id="33">ОПД</div>
+                <div class="tile purple" data-id="30">Программирование</div>
+                <div class="tile purple" data-id="29">Информатика</div>
+                <div class="tile purple" data-id="31">БД</div>
+                <div class="tile purple" data-id="34">ЯПы</div>
+                <div class="tile purple" data-id="27">web</div>
+                <div class="tile purple" data-id="32">Арх ЭВМ</div>
+                <div class="tile purple" data-id="26">ИБ</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h3 class="category-title">История</h3>
+            <div class="tiles-container">
+                <div class="tile blue" data-id="8">История русской культуры в контексте мировой культуры</div>
+                <div class="tile blue" data-id="7">Россия в истории современных международных отношений</div>
+                <div class="tile blue" data-id="4">Реформы и реформаторы в истории России</div>
+                <div class="tile blue" data-id="6">История российской науки и техники</div>
+                <div class="tile blue" data-id="5">История России и мира в ХХ веке</div>
+                <div class="tile blue" data-id="3">Социальная история России</div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h3 class="category-title">Предложения? Пожелания? Баги?</h3>
+            <a href="https://t.me/reviews_ext">Напишите в директ канала</a> или
+            <a href="https://github.com/OneTwoZzzPlus/reviews/issues">в issues github</a>
         </div>
     `
 }
