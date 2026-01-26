@@ -35,10 +35,10 @@ export function getElements(root) {
 export function renderAddReviewForm(isUserModerator) {
     return `
         ${isUserModerator ?
-        `<button id="addrev-spam" class="rev-button-s">
-            Отправить в спам
+        `<button id="addrev-exit" class="rev-button-s">
+            Отмена
         </button>`: ''}
-
+        
         <p class="add-rev-label">* Добавление нового отзыва, для преподавателя...</p>
         <div id="addrev-teacher-input-wrapper" class="rev-input-wrapper">
             <label for="addrev-teacher-input">ФИО преподавателя</label>
@@ -97,8 +97,9 @@ export function renderAddReviewForm(isUserModerator) {
             ${isUserModerator ? "Отклонить (нарушает правила)" : "Очистить"}
         </button>
         ${isUserModerator ?
-        `<button id="addrev-exit" class="rev-button-s">
-            Отмена
+        `<button id="addrev-spam" class="rev-button-s">
+            Отправить в спам
         </button>`: ''}
+
     `
 }

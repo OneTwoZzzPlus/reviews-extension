@@ -186,7 +186,6 @@
 }
 
 .search-id {
-    display: none;
     color: var(--color-muted);
 }
 
@@ -594,7 +593,7 @@
     word-break: break-word;
     overflow-wrap: break-word;
     text-align: center;
-    box-sizing: border-box;
+    line-height: 1.3;
 
     gap: 0.5rem;
 }

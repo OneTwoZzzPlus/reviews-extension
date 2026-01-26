@@ -4,7 +4,7 @@ import {renderAddReviewForm, getElements, MAX_TEXTAREA} from "./creation/renderR
 import {fetchCancelSuggestion, fetchCommitSuggestion, fetchSearch, fetchSendSuggestion} from "../../api/api.js";
 import {createSearch} from "./tabSearch.js";
 
-let isUserModerator = false;
+let modeModerator = false;
 let clearFormCallback = undefined;
 const emptyState = {
     id: null,
@@ -24,14 +24,14 @@ let state = structuredClone(emptyState);
 /** Форма добавления отзыва
  * @param clearFormCallbackLocal
  * @param {SuggestionGetResponse|null} data
- * @param {boolean} modeModerator
+ * @param {boolean} isModeModerator
  * */
-export function createAddReviewForm(clearFormCallbackLocal, data=null, modeModerator=false) {
-    isUserModerator = modeModerator;
+export function createAddReviewForm(clearFormCallbackLocal, data=null, isModeModerator=false) {
+    modeModerator = isModeModerator;
     clearFormCallback = clearFormCallbackLocal;
 
     const wrapper = document.createElement("div");
-    wrapper.innerHTML = renderAddReviewForm(isUserModerator);
+    wrapper.innerHTML = renderAddReviewForm(modeModerator);
 
     const root = getElements(wrapper);
 
@@ -45,7 +45,6 @@ export function createAddReviewForm(clearFormCallbackLocal, data=null, modeModer
         state.subject.title = data.subject.title;
         state.comment = data.text;
         state.subs = new Map(data.subs.map(item => [item.title, {id: item.id || null, title: item.title}]));
-        console.log(state);
     }
 
     refreshForm(root);
@@ -93,7 +92,7 @@ function bindEvents(wrapper, root) {
             state.subs.delete(key)
             refreshList(root.subs, state.subs);
         }
-        if (isUserModerator) {
+        if (modeModerator) {
             if (e.target === root.submit) {
                 commitSuggestion()
             }
@@ -268,11 +267,13 @@ function search(rootEl, is, s, load) {
     fetchSearch(normalizeString(is.value), is.controller, is.type).then(data => {
         rootEl.container.innerHTML = "";
         data.results.push({
-            id: -1,
+            id: null,
             title: "Добавить новый",
             type: "add"
         })
-        const searchBox = createSearch(data, (id, type, title) => {load(rootEl, is, s, id, type, title)});
+        const searchBox = createSearch(data, (id, type, title) => {
+            load(rootEl, is, s, id, type, title)
+        }, modeModerator);
         if (searchBox) rootEl.container.appendChild(searchBox);
         else rootEl.container.innerHTML = strings.brokeSearchText;
     }).catch(status => {
@@ -280,14 +281,14 @@ function search(rootEl, is, s, load) {
         if (status === 404) {
             const dt = {
                 results: [{
-                    id: -1,
+                    id: null,
                     title: "Добавить новый",
                     type: "add"
                 }],
             }
             const searchBox = createSearch(dt, (id, type, title) => {
                 load(rootEl, is, s, id, type, title)
-            });
+            }, modeModerator);
             if (searchBox) rootEl.container.appendChild(searchBox);
         }
     })
@@ -318,7 +319,8 @@ function refreshSingle(rootEl, s) {
     if (s.id === null) {
         rootEl.status.innerHTML = `Добавлен новый: <span class="normal-text">${s.title}</span>`;
     } else {
-        rootEl.status.innerHTML = `Выбран: <span class="normal-text">${s.title}</span>`;
+        rootEl.status.innerHTML = `
+            Выбран: <span class="normal-text">${s.title} ${modeModerator ? `(${s.id})`: ''}</span>`;
     }
     rootEl.input.value = "";
     rootEl.input.placeholder = s.title;
@@ -356,6 +358,7 @@ function refreshList(rootEl, s) {
                 <div class="rev-list-item">
                     ${item.id === null ? `<span class="muted-text">(новый)</span>` : ''}
                     ${item.title}
+                    ${modeModerator && item.id !== null ? `(${item.id})`: ''}
                     <button class="rev-list-item-reset" data-id="${title}">&times;</button>
                 </div>
             `).join('')}

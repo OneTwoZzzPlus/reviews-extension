@@ -136,7 +136,7 @@ async function search() {
         const searchBox = createSearch(data, (id, type) => {
             if (content !== 'search') return;
             load(id, type);
-        });
+        }, isUserModerator);
         if (searchBox) {
             statusBox.innerHTML = "";
             container.innerHTML = "";
