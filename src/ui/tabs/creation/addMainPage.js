@@ -62,8 +62,8 @@ export function renderMainPage() {
                 <div class="tile purple" data-id="29">Информатика</div>
                 <div class="tile purple" data-id="31">БД</div>
                 <div class="tile purple" data-id="34">ЯПы</div>
-                <div class="tile purple" data-id="27">web</div>
-                <div class="tile purple" data-id="32">Арх ЭВМ</div>
+                <div class="tile purple" data-id="27">WEB</div>
+                <div class="tile purple" data-id="32">АК</div>
                 <div class="tile purple" data-id="26">ИБ</div>
             </div>
         </div>
