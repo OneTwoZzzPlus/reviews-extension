@@ -39,10 +39,13 @@ export function createAddReviewForm(clearFormCallbackLocal, data=null, modeModer
 
     if (data) {
         state.id = data.id;
-        state.teacher = data.teacher;
-        state.subject = data.subject;
+        state.teacher.id = data.teacher.id || null;
+        state.teacher.title = data.teacher.title;
+        state.subject.id = data.subject.id || null;
+        state.subject.title = data.subject.title;
         state.comment = data.text;
-        state.subs = new Map(data.subs.map(item => [item.title, item]));
+        state.subs = new Map(data.subs.map(item => [item.title, {id: item.id || null, title: item.title}]));
+        console.log(state);
     }
 
     refreshForm(root);
@@ -206,16 +209,16 @@ function sendSuggestion() {
 function commitSuggestion() {
     if (state.id === null) alert('Suggestion id пустой!')
 
-    if (state.teacher.id === null) {
+    if (state.teacher.id === null || state.teacher.id === undefined) {
         alert("Выберите существующего преподавателя");
         return;
     }
-    if (state.subject.id === null) {
+    if (state.subject.id === null || state.subject.id === undefined) {
         alert("Выберите существующий основной предмет");
         return;
     }
     for (let s in state.subs) {
-        if (s.id === null) {
+        if (s.id === null || s.id === undefined) {
             alert("Выберите существующие предметы");
             return;
         }
@@ -314,9 +317,9 @@ function refreshSingle(rootEl, s) {
     }
     if (s.id === null) {
         rootEl.status.innerHTML = `Добавлен новый: <span class="normal-text">${s.title}</span>`;
+    } else {
+        rootEl.status.innerHTML = `Выбран: <span class="normal-text">${s.title}</span>`;
     }
-    rootEl.status.innerHTML = `Выбран: <span class="normal-text">${s.title}</span>`;
-
     rootEl.input.value = "";
     rootEl.input.placeholder = s.title;
 }
