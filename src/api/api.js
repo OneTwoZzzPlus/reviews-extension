@@ -11,7 +11,8 @@ import {refreshToken, accessToken, isAccessTokenExpired,
  * @param {AbortController} [controller]
  */
 async function fetchJSON(method, path, options = {}, controller = null) {
-    console.log(`[API] send ${method} ${path} ${options === {} ? '' : `with options = ${JSON.stringify(options)}`}`);
+    const hasOptions = Object.keys(options).length > 0;
+    console.log(`[API] send ${method} ${path} ${hasOptions ? `with options = ${JSON.stringify(options)}` : ''}`);
 
     const url = new URL(path, API_HOST);
 
@@ -26,6 +27,7 @@ async function fetchJSON(method, path, options = {}, controller = null) {
     if (refreshToken) {
         try {
             if (!accessToken || isAccessTokenExpired()) {
+                console.log('[API] Refreshing token...');
                 const urlRefresh = new URL("/authp/refresh", API_HOST);
                 const resp = await fetch(urlRefresh, {
                     method: 'POST',
@@ -37,13 +39,19 @@ async function fetchJSON(method, path, options = {}, controller = null) {
                     const aToken = res?.access_token;
                     if (aToken && validateTokenISU(aToken)) {
                         saveTokensAuto(refreshToken, aToken);
+                        console.log('[API] Token refreshed successfully');
+                    } else {
+                        console.error('[API] Invalid token in refresh response');
+                        resetTokensAuto();
                     }
                 } else {
-                    console.error('[API] Refresh status code ' + resp.status);
+                    console.error('[API] Refresh failed with status:', resp.status);
                     resetTokensAuto();
                 }
             }
-            if (accessToken) fetchOptions.headers['token'] = accessToken;
+            if (accessToken) {
+                fetchOptions.headers['token'] = accessToken;
+            }
         } catch (err) {
             console.error('[API] Unable to refresh the token', err);
         }

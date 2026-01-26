@@ -75,6 +75,7 @@ export function saveTokensPage(rToken, aToken) {
     isExtension = false;
     setCookie('refresh_token', rToken, {secure: false});
     setCookie('access_token', aToken, {secure: false});
+    setTokens(rToken, aToken)
 }
 
 export function loadTokensPage() {
