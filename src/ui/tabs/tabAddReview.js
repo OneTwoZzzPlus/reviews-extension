@@ -1,10 +1,17 @@
 import * as strings from "../../strings.js";
-import {normalizeString} from "../../utils/utils.js"
+import {getNonNegativeInt, normalizeString} from "../../utils/utils.js"
 import {renderAddReviewForm, getElements, MAX_TEXTAREA} from "./creation/renderReviewForm.js";
-import {fetchCancelSuggestion, fetchCommitSuggestion, fetchSearch, fetchSendSuggestion} from "../../api/api.js";
+import {
+    fetchCancelSuggestion,
+    fetchCommitSuggestion,
+    fetchInsertComment,
+    fetchSearch,
+    fetchSendSuggestion
+} from "../../api/api.js";
 import {createSearch} from "./tabSearch.js";
 
 let modeModerator = false;
+let externalSource = false;
 let isSent = false;
 let clearFormCallback = undefined;
 const emptyState = {
@@ -26,13 +33,15 @@ let state = structuredClone(emptyState);
  * @param clearFormCallbackLocal
  * @param {SuggestionGetResponse|null} data
  * @param {boolean} isModeModerator
+ * @param {boolean} isExternalSource
  * */
-export function createAddReviewForm(clearFormCallbackLocal, data=null, isModeModerator=false) {
+export function createAddReviewForm(clearFormCallbackLocal, data=null, isModeModerator=false, isExternalSource=false) {
+    externalSource = isExternalSource ? isModeModerator : false;
     modeModerator = isModeModerator;
     clearFormCallback = clearFormCallbackLocal;
 
     const wrapper = document.createElement("div");
-    wrapper.innerHTML = renderAddReviewForm(modeModerator);
+    wrapper.innerHTML = renderAddReviewForm(modeModerator, externalSource);
 
     const root = getElements(wrapper);
 
@@ -94,14 +103,20 @@ function bindEvents(wrapper, root) {
             refreshList(root.subs, state.subs);
         }
         if (modeModerator) {
-            if (e.target === root.submit) {
-                commitSuggestion()
-            }
-            if (e.target === root.cancel) {
-                rejectSuggestion('rejected')
-            }
-            if (e.target === root.spam) {
-                rejectSuggestion('spam')
+            if (externalSource) {
+                if (e.target === root.submit) {
+                    addComment(root)
+                }
+            } else {
+                if (e.target === root.submit) {
+                    commitSuggestion()
+                }
+                if (e.target === root.cancel) {
+                    rejectSuggestion('rejected')
+                }
+                if (e.target === root.spam) {
+                    rejectSuggestion('spam')
+                }
             }
             if (e.target === root.exit) {
                 state = structuredClone(emptyState);
@@ -175,6 +190,54 @@ function bindEvents(wrapper, root) {
             inputEvent(event)
         }
     })
+}
+
+function addComment(root) {
+    const source_id = getNonNegativeInt(normalizeString(root.ext.source.value));
+    if (source_id === null) {
+        alert("Введите source_id");
+        return;
+    }
+    const date = normalizeString(root.ext.date.value);
+    if (date === '') {
+        alert("Введите нормальную дату");
+        return;
+    }
+    if (state.teacher.id === null) {
+        alert("Выберите преподавателя");
+        return;
+    }
+    if (state.subject.id === null) {
+        alert("Выберите основной предмет");
+        return;
+    }
+    if (normalizeString(state.comment).length === 0) {
+        alert("Введите текст отзыва");
+        return;
+    }
+
+    const requestBody = {
+        source_id: source_id,
+        date: date,
+        teacher: state.teacher,
+        subject: state.subject,
+        subs: Array.from(state.subs.values()),
+        text: state.comment,
+    }
+
+    if (isSent) return;
+    isSent = true;
+
+    fetchInsertComment(requestBody).then(data => {
+        alert(`Добавлено c id: ${data.id}`)
+        state = structuredClone(emptyState);
+        root.ext.date.value = "";
+        refreshForm(root)
+        isSent = false;
+    }).catch(status => {
+        alert(`Сервер ответил ${status}`)
+        isSent = false;
+    });
 }
 
 function sendSuggestion() {
@@ -334,7 +397,7 @@ function refreshSingle(rootEl, s) {
         rootEl.status.innerHTML = `Добавлен новый: <span class="normal-text">${s.title}</span>`;
     } else {
         rootEl.status.innerHTML = `
-            Выбран: <span class="normal-text">${s.title} ${modeModerator ? `(${s.id})`: ''}</span>`;
+            Выбран: <span class="normal-text">${s.title} ${modeModerator ? `<b>(${s.id})</b>`: ''}</span>`;
     }
     rootEl.input.value = "";
     rootEl.input.placeholder = s.title;
@@ -372,7 +435,7 @@ function refreshList(rootEl, s) {
                 <div class="rev-list-item">
                     ${item.id === null ? `<span class="muted-text">(новый)</span>` : ''}
                     ${item.title}
-                    ${modeModerator && item.id !== null ? `(${item.id})`: ''}
+                    ${modeModerator && item.id !== null ? `(<b>${item.id}</b>)`: ''}
                     <button class="rev-list-item-reset" data-id="${title}">&times;</button>
                 </div>
             `).join('')}

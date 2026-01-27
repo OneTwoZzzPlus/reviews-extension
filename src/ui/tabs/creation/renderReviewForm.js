@@ -29,15 +29,30 @@ export function getElements(root) {
         cancel: root.querySelector("#addrev-cancel"),
         exit: root.querySelector("#addrev-exit"),
         spam: root.querySelector("#addrev-spam"),
+        ext: {
+            source: root.querySelector("#addrev-source"),
+            date: root.querySelector("#addrev-date"),
+        },
+
     };
 }
 
-export function renderAddReviewForm(isUserModerator) {
+export function renderAddReviewForm(isUserModerator, externalSource=false) {
+    if (!isUserModerator) externalSource = false;
     return `
-        ${isUserModerator ?
+        ${isUserModerator || externalSource ?
         `<button id="addrev-exit" class="rev-button-s">
             Отмена
         </button>`: ''}
+        
+        ${externalSource ? 
+        `<div class="mod-form" style="margin-top: 1rem;">
+        <label for="addrev-source">ID источника</label>
+        <input type="text" id="addrev-source" class="mod-row mod-input" placeholder="source_id"/>
+
+        <label for="addrev-date">Дата</label>
+        <input type="text" id="addrev-date" class="mod-row mod-input" placeholder="HH:MM DD.MM.YYYY"/>
+        </div>` : ''}
         
         <p class="add-rev-label">* Добавление нового отзыва, для преподавателя...</p>
         <div id="addrev-teacher-input-wrapper" class="rev-input-wrapper">
@@ -90,16 +105,26 @@ export function renderAddReviewForm(isUserModerator) {
                 <span id="addrev-comment-char-count">0</span>/${MAX_TEXTAREA}
             </div>
         </div>
-        <button id="addrev-submit" class="rev-button">
-            ${isUserModerator ? "Добавить отзыв" : "Отправить анонимный отзыв"}
-        </button>
-        <button id="addrev-cancel" class="rev-button-s">
-            ${isUserModerator ? "Отклонить (нарушает правила)" : "Очистить"}
-        </button>
-        ${isUserModerator ?
+        
+        ${isUserModerator || externalSource ?
+        `<button id="addrev-submit" class="rev-button-s">
+            Добавить отзыв
+        </button>`: 
+        `<button id="addrev-submit" class="rev-button">
+            Отправить анонимный отзыв
+        </button>`}
+        
+        ${isUserModerator && !externalSource ? 
+        `<button id="addrev-cancel" class="rev-button-s">
+            Отклонить (нарушает правила)
+        </button>`:
+        `<button id="addrev-cancel" class="rev-button-s">
+            Очистить
+        </button>`}
+        
+        ${isUserModerator && !externalSource ?
         `<button id="addrev-spam" class="rev-button-s">
             Отправить в спам
         </button>`: ''}
-
     `
 }

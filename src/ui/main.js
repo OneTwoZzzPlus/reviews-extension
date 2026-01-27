@@ -216,6 +216,13 @@ function openModeratorPanel() {
     container.innerHTML = '';
     container.appendChild(createUpdateForm());
 
+    const button = document.createElement('button');
+    button.classList.add('rev-button-s');
+    button.style.margin = '0 0 0.5rem 0';
+    button.innerHTML = "Добавить сторонний отзыв";
+    button.addEventListener('click', openExternalReview);
+    container.appendChild(button);
+
     /** @param {SuggestionListResponse} data */
     fetchGetSuggestionList().then(data => {
         if (content !== 'moderator') return;
@@ -228,6 +235,18 @@ function openModeratorPanel() {
         statusBox.innerHTML = `Сервер ответил ${status}`;
     })
 
+}
+
+function openExternalReview() {
+    if (!isUserModerator) return;
+    content = 'moderator-external';
+    header.innerHTML = strings.moderationHeader;
+    statusBox.innerHTML = '';
+    container.innerHTML = '';
+    container.appendChild(createUpdateForm());
+    container.appendChild(createAddReviewForm(
+        openModeratorPanel, null, true, true
+    ));
 }
 
 function openModerationReview(id) {
