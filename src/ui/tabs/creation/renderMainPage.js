@@ -20,6 +20,7 @@ export function renderMainPage() {
                 <div class="tile green" data-id="2">Философия</div>
                 <div class="tile green" data-id="9">Коммуникации и командообразование</div>
                 <div class="tile green" data-id="47">Техники публичных выступлений</div>
+                <div class="tile green" data-id="25">Физика</div>
             </div>
         </div>
 
@@ -44,11 +45,13 @@ export function renderMainPage() {
         <div class="category">
             <h3 class="category-title">ПИН</h3>
             <div class="tiles-container">
-                <div class="tile yellow" data-id="15">Программирование</div>
+                <div class="tile yellow" data-id="15">Прога</div>
                 <div class="tile yellow" data-id="16">Алгосы</div>
                 <div class="tile yellow" data-id="17">Инфоком</div>
                 <div class="tile yellow" data-id="19">ПиРБД</div>
                 <div class="tile yellow" data-id="46">ООП</div>
+                <div class="tile yellow" data-id="53">Механика</div>
+                <div class="tile yellow" data-id="54">Электромагнетизм</div>
             </div>
         </div>
 

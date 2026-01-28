@@ -22,6 +22,13 @@
     --secondary-orange: #fa6400;
     --secondary-yellow: #f7b500;
 
+    --secondary-blue-light: #e5f4ff;
+    --secondary-purple-light: #f6e6ff;
+    --secondary-green-light: #e9f7e8;
+    --secondary-red-light: #fceaea;
+    --secondary-orange-light: #ffefe5;
+    --secondary-yellow-light: #fef8e5;
+
     --transition: all 0.2s ease;
     --shadow: 0 2px 4px rgba(0,0,0,0.1);
     --shadow-hover: 0 4px 12px rgba(0,0,0,0.15);
@@ -353,6 +360,7 @@
 .reviews-menu {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
 }
 
@@ -556,13 +564,16 @@
 
 .category {
     margin-bottom: 1rem;
+    padding: var(--padding);
+    border: var(--border);
+    border-radius: var(--radius);
 }
 
 .category-title {
     margin: 0 0 0.5rem 0;
-    font-size: 1.5rem;
-    color: #333;
-    font-weight: normal;
+    color: var(--color-text);
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .tiles-container {
@@ -577,10 +588,13 @@
 
     flex: 0 1 auto;
 
+    font-weight: bold;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: var(--padding);
+    border: var(--border);
     border-radius: var(--radius);
 
     user-select: none;
@@ -616,33 +630,33 @@
 
 /** Main page colors */
 .tile.orange {
-    background-color: var(--secondary-orange);
-    color: white;
+    background-color: var(--secondary-orange-light);
+    border-color: var(--secondary-orange);
 }
 
 .tile.blue {
-    background-color: var(--secondary-blue);
-    color: white;
+    background-color: var(--secondary-blue-light);
+    border-color: var(--secondary-blue);
 }
 
 .tile.green {
-    background-color: var(--secondary-green);
-    color: white;
+    background-color: var(--secondary-green-light);
+    border-color: var(--secondary-green);
 }
 
 .tile.red {
-    background-color: var(--secondary-red);
-    color: white;
+    background-color: var(--secondary-red-light);
+    border-color: var(--secondary-red);
 }
 
 .tile.purple {
-    background-color: var(--secondary-purple);
-    color: white;
+    background-color: var(--secondary-purple-light);
+    border-color: var(--secondary-purple);
 }
 
 .tile.yellow {
-    background-color: var(--secondary-yellow);
-    color: white;
+    background-color: var(--secondary-yellow-light);
+    border-color: var(--secondary-yellow);
 }
 
 /** Mod update forms */
